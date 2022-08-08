@@ -1,0 +1,4315 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<style name="Lightweight" vbversion="3.8.7" product="vbulletin" type="custom">
+	<templategroup name="BB Code Layout">
+		<template name="bbcode_quote" templatetype="template" date="1213656635" username="dartho" version="3.8.7"><![CDATA[<div class="quote"><i><phrase 1="$username">$vbphrase[originally_posted_by_x]</phrase>:<br />
+$message</i></div>
+]]></template>
+		<template name="bbcode_quote_printable" templatetype="template" date="1182779928" username="dartho" version="3.8.7"><![CDATA[<p class="quote"><i><phrase 1="$username">$vbphrase[originally_posted_by_x]</phrase>:<br />
+$message</i></p>
+]]></template>
+	</templategroup>
+	<templategroup name="Editor">
+		<template name="editor_styles_button_normal" templatetype="template" date="1237260778" username="dartho" version="3.8.7"><![CDATA[background: #E1E1E2; color: #000000; padding: 1px; border: none;]]></template>
+		<template name="editor_toolbar_off" templatetype="template" date="1206876491" username="dartho" version="3.8.7"><![CDATA[<textarea name="message" id="{$editorid}_textarea" rows="10" cols="15" style="width:100%; height:100px">$newpost[message]</textarea><br />
+]]></template>
+		<template name="editor_toolbar_on" templatetype="template" date="1212446157" username="dartho" version="3.8.7"><![CDATA[<textarea name="message" id="{$editorid}_textarea" rows="10" cols="15" style="width:100%; height:100px">$newpost[message]</textarea><br />
+]]></template>
+		<template name="editor_toolbar_standard" templatetype="template" date="1206876513" username="dartho" version="3.8.7"><![CDATA[<textarea name="message" id="{$editorid}_textarea" rows="10" cols="15" style="width:100%; height:100px">$newpost[message]</textarea><br />
+]]></template>
+		<template name="editor_toolbar_wysiwyg" templatetype="template" date="1206876522" username="dartho" version="3.8.7"><![CDATA[<textarea name="message" id="{$editorid}_textarea" rows="10" cols="15" style="width:100%; height:100px">$newpost[message]</textarea><br />
+]]></template>
+	</templategroup>
+	<templategroup name="Forum Display">
+		<template name="FORUMDISPLAY" templatetype="template" date="1305266140" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$foruminfo[title_clean]<if condition="$pagenumber>1"> - <phrase 1="$pagenumber">$vbphrase[page_x]</phrase></if> - $vboptions[bbtitle]</title>
+
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<if condition="$pagenav"><div style="float:right;margin:4px;">$pagenav</div></if>
+<if condition="$show['newthreadlink']"><div style="margin:4px;"><a id="btn" href="newthread.php?$session[sessionurl]do=newthread&amp;f=$foruminfo[forumid]">$vbphrase[new] $vbphrase[thread]</a></div></if><div class="titlebg">$foruminfo[title]</div>
+<if condition="$show['forumslist']">
+<!-- sub-forum list  -->
+<!-- <div class="windowbg2">$vbphrase[subforums]:</div> -->
+$forumbits
+<!-- / sub-forum list  -->
+</if>
+
+$announcebits
+<if condition="$show['threads']">
+	<!-- show threads -->
+	<if condition="$show['stickies']">
+	$threadbits_sticky
+	</if>
+	$threadbits	
+	<!-- end show threads -->
+<else />
+</if>
+$ad_location[ad_forumdisplay_afterthreads]
+<if condition="$foruminfo[parentid] > '1'"> 
+<div style="padding-top:5px;"><a id="btn" href="forumdisplay.php?$session[sessionurl]f=$foruminfo[parentid]">Up</a></div>
+<else />
+<div style="margin:5px;"><a id="btn"href="$vboptions[forumhome].php?$session[sessionurl_q]">Up</a></div>
+</if>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="forumdisplay_announcement" templatetype="template" date="1183285858" username="dartho" version="3.8.7"><![CDATA[<div style="padding-left: 5px;padding-bottom:6px;">
+<span class="smallfont">$announcement[username]</span>:: <a href="announcement.php?$session[sessionurl]f=$foruminfo[forumid]$announcementidlink"><strong>$announcement[title]</strong></a>
+</div>
+]]></template>
+	</templategroup>
+	<templategroup name="Forum Home">
+		<template name="FORUMHOME" templatetype="template" date="1305292920" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+$forumbits
+$ad_location[ad_forumhome_afterforums]
+<div class="footlink"><a id="btn" href="forumdisplay.php?$session[sessionurl]do=markread&amp;markreadhash=$bbuserinfo[securitytoken]" rel="nofollow">$vbphrase[mark_forums_read]</a></div>
+<if condition="$show['loggedinusers']">
+<div class="titlebg"><a href="online.php$session[sessionurl_q]">$vbphrase[currently_active_users]</a>: $totalonline</div>
+<div class="oldwindowbg"><phrase 1="$recordusers" 2="$recorddate" 3="$recordtime">$vbphrase[most_users_ever_online_was_x_y_at_z]</phrase><br />$activeusers</div>
+</if>
+<div class="titlebg"><phrase 1="$vboptions[bbtitle]">$vbphrase[x_statistics]</phrase></div>
+<div class="oldwindowbg">
+<b>$vbphrase[threads]:</b> $totalthreads<br />
+<b>$vbphrase[posts]:</b> $totalposts<br />
+<b>$vbphrase[members]:</b> $numbermembers<br />
+<if condition="$show['activemembers']">
+<b>$vbphrase[active_members]:</b> $activemembers<br />
+</if>
+<phrase 1="member.php?$session[sessionurl]u=$newuserid" 2="$newusername">$vbphrase[welcome_to_our_newest_member_x]</phrase>
+</div>
+<if condition="$show['birthdays']">
+<!-- today's birthdays -->
+<div class="titlebg">$vbphrase[todays_birthdays]</div>
+<div class="oldwindowbg">$birthdays</div>
+<!-- end today's birthdays -->
+</if>
+<if condition="$show['upcomingevents']">
+<if condition="$show['todaysevents']">
+<div class="titlebg">$vbphrase[todays_events]</div>
+<else />
+<div class="titlebg"><phrase 1="$vboptions[showevents]">$vbphrase[upcoming_events_for_the_next_x_days]</phrase></div>
+</if>
+<div class="oldwindowbg">$upcomingevents</div>
+</if>
+$footer
+
+</div>
+</body>
+</html>
+]]></template>
+		<template name="forumhome_forumbit_level1_nopost" templatetype="template" date="1305207040" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg"><a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]">$forum[title]</a></div>
+<if condition="$childforumbits">
+$childforumbits
+</if>
+
+
+]]></template>
+		<template name="forumhome_forumbit_level1_post" templatetype="template" date="1305207172" username="dartho" version="3.8.7"><![CDATA[<div class="forum$forum[statusicon]"><img width="16px" height="16px" style="margin-top: 0px;margin-left: 3px;" src="$stylevar[imgdir_statusicon]/lightweight/$forum[imageprefix]forum_$forum[statusicon]-16.png" alt="" align="left">&nbsp;<a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]">$forum[title]</a>
+</div> 
+<if condition="$childforumbits">
+$childforumbits
+</if>]]></template>
+		<template name="forumhome_forumbit_level2_nopost" templatetype="template" date="1305207179" username="dartho" version="3.8.7"><![CDATA[<div class="windowbg">"><img  width="16px" height="16px" style="margin-top: 0px;margin-left: 3px;" src="$stylevar[imgdir_statusicon]/lightweight/$forum[imageprefix]forum_$forum[statusicon]-16.png" alt="" align="left">&nbsp;<a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]">$forum[title]</a></div>
+<if condition="$childforumbits">
+$childforumbits
+</if>]]></template>
+		<template name="forumhome_forumbit_level2_post" templatetype="template" date="1305207185" username="dartho" version="3.8.7"><![CDATA[<div class="$forum[statusicon]windowbg"><img width="16px" height="16px" style="margin-top: 0px;margin-left: 3px;" src="$stylevar[imgdir_statusicon]/lightweight/$forum[imageprefix]forum_$forum[statusicon]-16.png" alt="" align="left">&nbsp;<a href="forumdisplay.php?$session[sessionurl]f=$forum[forumid]">$forum[title]</a></div>
+<if condition="$childforumbits">
+$childforumbits
+</if>]]></template>
+	</templategroup>
+	<templategroup name="Human Verification">
+		<template name="humanverify_image" templatetype="template" date="1305262188" username="dartho" version="3.8.7"><![CDATA[<div class="thread">$vbphrase[image_verification]</div>
+<div class="windowbg">
+$vbphrase[please_enter_the_text]<br /><br />
+<div><input type="text" class="bginput" name="${var_prefix}[input]" size="10" maxlength="6" />
+<input id="hash" type="hidden" name="${var_prefix}[hash]" value="$humanverify[hash]" />
+<img id="imagereg" src="image.php?$session[sessionurl]type=hv&amp;hash=$humanverify[hash]" alt="$vbphrase[registration_image]" width="201" height="61" border="0" />
+<span id="refresh_imagereg" style="display:none"><a href="#">$vbphrase[refresh_image]</a></span>
+</div>
+</div>
+<script type="text/javascript" src="clientscript/vbulletin_ajax_imagereg.js?v=$vboptions[simpleversion]"></script>
+<script type="text/javascript">
+<!--
+vB_AJAX_ImageReg_Init();
+//-->
+</script>]]></template>
+		<template name="humanverify_question" templatetype="template" date="1305261624" username="dartho" version="3.8.7"><![CDATA[<if condition="$humanverify['answer']">
+	<div class="thread">$vbphrase[random_question]</div>
+	<div class="windowbg">
+	<div>$humanverify[question]</div>
+	<div><input type="text" class="bginput" name="${var_prefix}[input]" id="humanverify" size="50" /></div>
+			<input id="hash" type="hidden" name="${var_prefix}[hash]" value="$humanverify[hash]" />
+</div>
+<else />
+	<input id="hash" type="hidden" name="${var_prefix}[hash]" value="$humanverify[hash]" />
+
+</if>]]></template>
+		<template name="humanverify_recaptcha" templatetype="template" date="1305262148" username="dartho" version="3.8.7"><![CDATA[	<div class="thread">$vbphrase[image_verification]</div>
+<div class="windowbg">
+	<input id="hash" type="hidden" name="${var_prefix}[hash]" value="$humanverify[hash]" />
+	<script type="text/javascript">
+		var RecaptchaOptions = {
+			theme : '$humanverify[theme]'
+			<if condition="$humanverify['langcode']">,lang : '$humanverify[langcode]'</if>
+		};
+	</script>
+	<div dir="ltr">
+	<if condition="$show['recaptcha_ssl']">
+		<script type="text/javascript" src="https://api-secure.recaptcha.net/challenge?k=$humanverify[publickey]">
+	<else />
+		<script type="text/javascript" src="http://api.recaptcha.net/challenge?k=$humanverify[publickey]">
+	</if>
+	</script>
+	</div>
+
+	<noscript>
+		<if condition="$show['recaptcha_ssl']">
+			<iframe src="https://api-secure.recaptcha.net/noscript?k=$humanverify[publickey]" height="300" width="400" frameborder="0"></iframe>
+		<else />
+			<iframe src="http://api.recaptcha.net/noscript?k=$humanverify[publickey]" height="300" width="400" frameborder="0"></iframe>
+	  </if>
+	   <br />
+	   <textarea name="recaptcha_challenge_field" rows="3" cols="40">
+	   </textarea>
+	   <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+	</noscript>
+</div>]]></template>
+	</templategroup>
+	<templategroup name="Member Info">
+		<template name="MEMBERINFO" templatetype="template" date="1290151917" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $vbphrase[view_profile]: $userinfo[username]</title>
+</head>
+<body>
+<div class="bodywrapping">
+
+$header
+$navbar
+<div class="titlebg">$vbphrase[view_profile]: $userinfo[username]</div>
+<div class="windowbg2">
+	<div class="smallfont">$vbphrase[username]: <strong>$prepared[musername]</strong></div>
+	<if condition="$prepared['usertitle']">
+		<div class="smallfont">$vbphrase[user_title]: <strong>$prepared[usertitle]</strong></div>
+	</if>
+	<if condition="$prepared['lastactivitydate'] OR $prepared['action']">
+			<if condition="$prepared['lastactivitydate']">
+				<div id="last_online">
+					<span class="shade">$vbphrase[last_activity]:</span> <strong>$prepared[lastactivitydate]<if condition="!$show['detailedtime']"> <span class="time">$prepared[lastactivitytime]</span></if></strong>
+				</div>
+			</if>
+			<if condition="$prepared['action']">
+				<span class="shade">$vbphrase[current_activity]:</span> <strong>$prepared[action] $prepared[where]</strong>
+			</if>
+	</if>
+	<if condition="$show['post_visitor_message'] OR $show['pm'] OR $show['email']">
+		<div class="titlebg"><phrase 1="$prepared[username]">$vbphrase[send_message_to_x]</phrase></div>
+	</if>
+	<if condition="$show['pm']">
+		<div class="windowbg"><a href="private.php?$session[sessionurl]do=newpm&amp;u=$prepared[userid]" rel="nofollow"><phrase 1="$prepared[username]">$vbphrase[send_private_message_to_x]</phrase></a></div>
+	</if>
+	<if condition="$show['email']"><div class="windowbg"><a href="sendmessage.php?$session[sessionurl]do=mailmember&amp;u=$prepared[userid]" rel="nofollow"><phrase 1="$prepared[username]">$vbphrase[send_message_via_email_to_x]</phrase></a></div></if>
+
+</div>
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="memberinfo_deletemessages" templatetype="template" date="1290151918" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<form action="member_inlinemod.php?vmids=$vmids" method="post" name="vbform">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="u" value="$userinfo[userid]" />
+<input type="hidden" name="messageids" value="$messageids" />
+<input type="hidden" name="do" value="doinlinedelete" />
+<input type="hidden" name="url" value="$url"  />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">$vbphrase[delete_messages]</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]">
+
+		<fieldset class="fieldset">
+			<legend>$vbphrase[deletion_options]</legend>
+			<div style="padding:$stylevar[formspacer]px">
+				<if condition="$show['deleteoption']">
+					<div class="fieldset">$vbphrase[how_would_you_like_to_delete]</div>
+				</if>
+				<if condition="$show['deletemessages']">
+					<div class="fieldset">
+						<label for="deletetype_1"><input type="radio" name="deletetype" value="1" id="deletetype_1" $checked[delete] />$vbphrase[soft_delete_leave_deleted_message]</label>
+					</div>
+				</if>
+
+				<if condition="$show['removemessages']">
+					<div class="fieldset">
+						<label for="deletetype_2"><input type="radio" name="deletetype" value="2" id="deletetype_2" $checked[remove] />$vbphrase[physically_remove]</label>
+					</div>
+				</if>
+
+				<if condition="$show['deletemessages']">
+					<div class="fieldset">
+						<label for="deletereason">$vbphrase[reason_for_deletion]
+							<input type="text" class="bginput" name="deletereason" id="deletereason" value="" size="50" maxlength="125" style="display:block" />
+						</label>
+					</div>
+				</if>
+			</div>
+		</fieldset>
+
+		<div class="fieldset shade"><phrase 1="$messagecount" 2="$usercount">$vbphrase[deleting_x_messages_from_y_user_profiles]</phrase></div>
+
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[delete]" accesskey="s" />
+		<input type="button" class="button" value="$vbphrase[cancel]" accesskey="c" onclick="history.back(1)" />
+	</div>
+	</td>
+</tr>
+</table>
+
+</form>
+
+<br />
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Modify User Option">
+		<template name="modifyoptions" templatetype="template" date="1305262955" username="dartho" version="3.8.7"><![CDATA[<form action="profile.php?do=updateoptions" method="post">
+<input type="hidden" name="s" value="$session[dbsessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="updateoptions" />
+<div class="titlebg">$vbphrase[edit_options]: $bbuserinfo[username]</div>
+<div class="windowbg2">$vbphrase[login_privacy]</div>
+
+<if condition="$show['invisibleoption']">				
+<div><label for="cb_invisible"><input type="checkbox" name="options[invisible]" value="1" id="cb_invisible" $checked[invisible] />$vbphrase[use_invisible_mode]</label><input type="hidden" name="set_options[invisible]" value="1" /></div>
+</if>
+
+<div class="windowbg2">$vbphrase[messaging_notification]</div>
+
+<div><label for="cb_adminemail"><input type="checkbox" name="options[adminemail]" value="1" id="cb_adminemail" $checked[adminemail] />$vbphrase[receive_email_from_bulletin_board_staff]</label><input type="hidden" name="set_options[adminemail]" value="1" /></div>
+
+<if condition="$show['receiveemail']">
+<div><label for="cb_showemail"><input type="checkbox" name="options[showemail]" value="1" id="cb_showemail" $checked[showemail] />$vbphrase[receive_email_from_other_members]</label><input type="hidden" name="set_options[showemail]" value="1" /></div>
+</if>
+
+<if condition="!$vboptions['enableemail']">
+<input type="hidden" name="options[showemail]" value="$bbuserinfo[showemail]" />
+</if>
+
+<if condition="$show['pmoptions']">
+<div><label for="cb_receivepm"><input type="checkbox" name="options[receivepm]" value="1" id="cb_receivepm" onclick="toggle_disabled(this.checked, 'pmoptions')" $checked[receivepm] />$vbphrase[enable_private_messaging]</label><input type="hidden" name="set_options[receivepm]" value="1" /></div>
+
+<div><label for="cb_emailonpm"><input type="checkbox" name="options[emailonpm]" value="1" id="cb_emailonpm" $checked[emailonpm] />$vbphrase[receive_email_notification_pm]</label><input type="hidden" name="set_options[emailonpm]" value="1" /></div>
+<div><label for="cb_pmpopup"><input type="checkbox" name="pmpopup" value="1" id="cb_pmpopup" $checked[pmpopup] />$vbphrase[show_pm_popup]</label></div>
+<else />
+<input type="hidden" name="options[receivepm]" value="$bbuserinfo[receivepm]" />
+<input type="hidden" name="options[emailonpm]" value="$bbuserinfo[emailonpm]" />
+<input type="hidden" name="pmpopup" value="$bbuserinfo[pmpopup]" />
+</if>
+
+
+<div class="windowbg2">$vbphrase[visible_post_elements]</div>
+<div><label for="cb_showsignatures"><input type="checkbox" name="options[showsignatures]" value="1" id="cb_showsignatures" $checked[showsignatures] />$vbphrase[show_signatures]</label><input type="hidden" name="set_options[showsignatures]" value="1" /></div>
+<div><label for="cb_showavatars"><input type="checkbox" name="options[showavatars]" value="1" id="cb_showavatars" $checked[showavatars] />$vbphrase[show_avatars]</label><input type="hidden" name="set_options[showavatars]" value="1" /></div>
+<div><label for="cb_showimages"><input type="checkbox" name="options[showimages]" value="1" id="cb_showimages" $checked[showimages] />$vbphrase[show_images] ($vbphrase[including_attached_and_img_code])</label><input type="hidden" name="set_options[showimages]" value="1" /></div>
+
+<div class="windowbg2">$vbphrase[thread_display_mode]:</div>
+<span>
+<input type="radio" name="threadedmode"  value="0" $threaddisplaymode[0]>$vbphrase[linear] - $vbphrase[oldest_first]<br />
+<input type="radio" name="threadedmode"  value="3" $threaddisplaymode[3]>$vbphrase[linear] - $vbphrase[newest_first]<br />
+<if condition="$vboptions['allowthreadedmode']">
+<input type="radio" name="threadedmode"  value="1" $threaddisplaymode[1]>$vbphrase[threaded]<br />
+<input type="radio" name="threadedmode"  value="2" $threaddisplaymode[2]>$vbphrase[hybrid]<br />
+</if>
+</span>
+<div class="windowbg2">$vbphrase[quick_style_chooser]</div>
+<if condition="$show['quickchooser']">
+<div>
+	<select name="styleid">
+		<optgroup label="$vbphrase[quick_style_chooser]">
+			$quickchooserbits
+		</optgroup>
+	</select>
+</div>
+</if>
+<div>
+<input type="submit" class="button" value="$vbphrase[save_changes]" accesskey="s" />
+<input type="reset" class="button" value="$vbphrase[reset_fields]" accesskey="r" />
+</div>
+</form>]]></template>
+		<template name="modifyoptions_timezone" templatetype="template" date="1305260277" username="dartho" version="3.8.7"><![CDATA[	<strong>$vbphrase[time_zone]</strong><br />
+	<span>
+	<select name="timezoneoffset" id="sel_timezoneoffset">
+		$timezoneoptions
+	</select>
+	</span><br />
+	$vbphrase[allow_daylight_savings_time]<br />
+	<span>
+		<select name="dst" id="sel_dst">
+			<option value="2" $selectdst[2]>$vbphrase[automatically_detect_dst_settings]</option>
+			<option value="1" $selectdst[1]>$vbphrase[dst_corrections_always_on]</option>
+			<option value="0" $selectdst[0]>$vbphrase[dst_corrections_always_off]</option>
+		</select>
+	</span><br />
+]]></template>
+		<template name="modifysignature" templatetype="template" date="1185584626" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">$vbphrase[edit_signature]</div>
+<div class="windowbg2">$preview</div>
+
+<form action="profile.php?do=updatesignature" enctype="multipart/form-data" method="post" name="vbform"<if condition="!is_browser('webtv')"> onsubmit="return vB_Editor['$editorid'].prepare_submit(0, 0)"</if>>
+<div>
+<div>$vbphrase[your_signature]:</div>
+$messagearea
+</div>
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="hidden" name="url" value="$url" />
+		<input type="hidden" name="s" value="$session[sessionhash]" />
+		<input type="hidden" name="do" value="updatesignature" />
+		<input type="hidden" name="MAX_FILE_SIZE" value="$inimaxattach" />
+		<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+		<input type="submit" class="button" value="$vbphrase[save]" accesskey="s" tabindex="1" />
+		<input type="submit" class="button" value="$vbphrase[preview]" name="preview" accesskey="r" tabindex="1" />	
+	</div>
+</form>
+]]></template>
+	</templategroup>
+	<templategroup name="Navigation / Breadcrumb">
+		<template name="navbar" templatetype="template" date="1305291051" username="dartho" version="3.8.7"><![CDATA[<div class="navbar">
+<a href="index.php$session[sessionurl_q]">Home</a>
+<if condition="$show['member']">
+<a href="search.php?$session[sessionurl]do=getnew">$vbphrase[new_posts]</a>
+<a href="usercp.php$session[sessionurl_q]"><if condition="$vbulletin->userinfo[pmunread]>0"><strong>*$vbphrase[user_cp]*</strong><else />$vbphrase[user_cp]</if></a><else />
+<a href="search.php?$session[sessionurl]do=getdaily">$vbphrase[todays_posts]</a>
+</if>
+<a href="search.php$session[sessionurl_q]">$vbphrase[search]</a>
+</div>
+
+<if condition="!$show['member']">
+<div>
+<form class="navbarbelow" action="login.php?do=login" method="post">
+<input onclick="this.value='';" name="vb_login_username" class="windowbg" id="navbar_username" accesskey="1" value="Username" size="8" type="text"> 
+<input type="password" class="windowbg" size="10" name="vb_login_password" id="navbar_password" accesskey="2" />
+<input name="cookieuser" value="1" type="checkbox">
+<input name="securitytoken" value="guest" type="hidden">
+&nbsp;<input id="btn" value="Log in" title="Enter your username and password in the boxes provided to login, or click the 'register' button to create a profile for yourself." accesskey="3" type="submit">
+<input name="s" value="" type="hidden">
+<input name="do" value="login" type="hidden">
+<input name="vb_login_md5password" type="hidden">
+<input name="vb_login_md5password_utf" type="hidden">
+</form>
+</div>
+</if>
+
+]]></template>
+		<template name="navbar_link" templatetype="template" date="1305266698" username="dartho" version="3.8.7"><![CDATA[<if condition="$show['breadcrumb']">
+	<span>&gt; <a href="$nav_url">$nav_title</a></span>
+<else />
+	$nav_title
+</if>]]></template>
+	</templategroup>
+	<templategroup name="New Posting">
+		<template name="newattachment" templatetype="template" date="1290151919" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vbphrase[manage_attachments] - $vboptions[bbtitle]</title>
+</head>
+<body style="margin:0px" onload="self.focus()">
+
+<script type="text/javascript">
+<!--
+
+	function verify_upload(formobj)
+	{
+		var haveupload = false;
+		for (var i=0; i < formobj.elements.length; i++)
+		{
+			var elm = formobj.elements[i];
+			if (elm.type == 'file' || elm.type == 'text')
+			{
+				if (elm.value != "")
+				{
+					haveupload = true;
+				}
+			}
+		}
+
+		if (haveupload)
+		{
+			obj = fetch_object("uploading");
+			obj.style.display = "";
+			return true;
+		}
+		else
+		{
+			alert("$vbphrase[select_a_file_to_attach]");
+			return false;
+		}
+	}
+
+<if condition="$show['updateparent']">
+	if (typeof window.opener.vB_Attachments != 'undefined')
+	{
+		window.opener.vB_Attachments.reset();
+		$new_attachlist_js
+	}
+</if>
+
+//-->
+</script>
+
+<div class="page">
+<form enctype="multipart/form-data" action="newattachment.php?do=manageattach&amp;p=$postid" name="newattachment" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="manageattach" />
+<input type="hidden" name="t" value="$threadid" />
+<input type="hidden" name="f" value="$forumid" />
+<input type="hidden" name="p" value="$postid" />
+<input type="hidden" name="poststarttime" value="$poststarttime" />
+<input type="hidden" name="editpost" value="$editpost" />
+<input type="hidden" name="posthash" value="$posthash" />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+<tr>
+	<td class="tcat">
+		<span class="smallfont" style="float:$stylevar[right]"><a href="#" onclick="self.close()">$vbphrase[close_this_window]</a></span>
+		$vbphrase[manage_attachments]
+	</td>
+</tr>
+<if condition="$show['errors']">
+<tr>
+	<td class="thead">$vbphrase[upload_errors]</td>
+</tr>
+$errorlist
+</if>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]">
+
+			<if condition="$show['attachmentlimits']">
+				<div class="fieldset">
+					<div style="padding:$stylevar[formspacer]px">
+						<phrase 1="$attach_username">$vbphrase[sum_of_attachments_owned_by_x]</phrase>:
+						$attachsum<br />
+						<table style="border:2px groove" cellpadding="0" cellspacing="1" border="0" width="100%">
+						<tr>
+							<if condition="$show['currentsize']"><td width="$attachsize" bgcolor="red" style="border:1px outset" class="smallfont" title="<phrase 1="$attachsum">$vbphrase[current_attachment_total_x]</phrase>">&nbsp;</td></if>
+							<if condition="$show['totalsize']"><td width="$totalsize" bgcolor="green" style="border:1px outset" class="smallfont" title="<phrase 1="$attachlimit">$vbphrase[maximum_attachment_storage_x]</phrase>">&nbsp;</td></if>
+						</tr>
+						</table>
+					</div>
+				</div>
+			</if>
+
+			<if condition="$show['attachoption']">
+			<if condition="$show['attachfile']">
+				<fieldset class="fieldset">
+					<legend>$vbphrase[upload_file_from_your_computer]</legend>
+					<table cellpadding="0" cellspacing="$stylevar[formspacer]" width="100%" border="0">
+					<tr valign="bottom">
+						<td>
+							<input type="hidden" name="MAX_FILE_SIZE" value="$inimaxattach" />
+							$attachinput
+						</td>
+						<td align="$stylevar[right]"><input type="submit" class="button" name="upload" value="$vbphrase[upload]" style="width:70px" onclick="return verify_upload(this.form);" /></td>
+					</tr>
+					</table>
+				</fieldset>
+			</if>
+			<if condition="$show['attachurl']">
+				<fieldset class="fieldset">
+					<legend>$vbphrase[upload_file_from_url]</legend>
+					<table cellpadding="0" cellspacing="$stylevar[formspacer]" width="100%" border="0">
+					<tr valign="bottom">
+						<td>
+							$attachurlinput
+						</td>
+						<td align="$stylevar[right]"><input type="submit" class="button" name="upload" value="$vbphrase[upload]" style="width:70px" onclick="return verify_upload(this.form);" /></td>
+					</tr>
+					</table>
+				</fieldset>
+			</if>
+			<else />
+			<fieldset class="fieldset">
+				<legend>$vbphrase[upload_file]</legend>
+				<if condition="$show['forumclosed']">
+					$vbphrase[this_forum_is_not_accepting_new_attachments]
+				<else />
+					<phrase 1="$vboptions[attachlimit]">$vbphrase[have_uploaded_maximum_x_files]</phrase>
+				</if>
+			</fieldset>
+			</if>
+
+			<if condition="$show['attachmentlist']">
+			<fieldset class="fieldset">
+				<legend>$vbphrase[current_attachments] ($totallimit)</legend>
+				<div style="padding:$stylevar[formspacer]px">
+					<table class="fieldset" cellpadding="0" cellspacing="1" border="0" width="100%">
+					$attachments
+					</table>
+				</div>
+			</fieldset>
+			</if>
+
+	<div align="center" id="uploading" style="display:none; margin-top:$stylevar[cellpadding]px">
+		<strong>$vbphrase[uploading_file]</strong>
+	</div>
+
+
+			<table cellpadding="0" cellspacing="$stylevar[formspacer]" border="0" width="100%">
+			<tr>
+				<td>
+					<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+					<thead>
+					<tr>
+						<td class="thead" colspan="4">
+							<a style="float:$stylevar[right]" href="#top" onclick="return toggle_collapse('attachkey')"><img id="collapseimg_attachkey" src="$stylevar[imgdir_button]/collapse_thead$vbcollapse[collapseimg_attachkey].gif" alt="" border="0" /></a>
+							<span class="fieldset">$vbphrase[attachment_key]</span>
+						</td>
+					</tr>
+					</thead>
+					<tbody id="collapseobj_attachkey" style="$vbcollapse[collapseobj_attachkey]">
+					<tr class="tcat">
+						<td class="smallfont"><strong>$vbphrase[filetype]</strong></td>
+						<td class="smallfont"><strong>$vbphrase[max_filesize]</strong></td>
+						<td class="smallfont"><strong>$vbphrase[max_width]</strong></td>
+						<td class="smallfont"><strong>$vbphrase[max_height]</strong></td>
+					</tr>
+					$attachkeybits
+					</tbody>
+					</table>
+				</td>
+			</tr>
+			</table>
+
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="button" class="button" value="$vbphrase[close_this_window]" onclick="window.close();" />
+	</div>
+
+	</td>
+</tr>
+</table>
+
+
+</form>
+</div>
+
+</div>
+</body>
+</html>]]></template>
+		<template name="newpoll" templatetype="template" date="1181218095" username="dartho" version="3.8.7"><![CDATA[<!-- Empty Template -->]]></template>
+		<template name="newreply" templatetype="template" date="1305263162" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<div class="titlebg">Reply To: $threadinfo[title]</div>
+<form action="newreply.php" method="post">
+<div style="padding-right:6px;">
+$vbphrase[message]:<br />
+<textarea name="message" id="{$editorid}_textarea" rows="10" cols="15" style="width:100%; height:100px">$newpost[message]</textarea>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="do" value="postreply" />
+<input type="hidden" name="t" value="$threadid" />
+<input type="hidden" name="p" value="$postid" />
+<input type="hidden" name="posthash" value="$posthash" />
+<input type="hidden" name="poststarttime" value="$poststarttime" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="submit" class="button" name="sbutton" value="$vbphrase[submit_reply]" accesskey="s" tabindex="1" />
+</div>
+</form>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="newthread" templatetype="template" date="1305263185" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<div class="titlebg">New Thread</div>
+<form action="newthread.php" method="post">
+<div style="padding-right:6px;">
+<strong>$vbphrase[forum]</strong>: <a href="forumdisplay.php?$session[sessionurl]f=$foruminfo[forumid]">$foruminfo[title]</a><br />
+            <if condition="$prefix_options">
+                $vbphrase[prefix]:<br />
+                    <select name="prefixid" class="bginput">
+                        <option value="">$vbphrase[no_prefix_meta]</option>
+                        $prefix_options
+                    </select><br />
+                $vbphrase[title]:<br />
+                <input type="text" class="bginput" name="subject" value="$subject" size="20" maxlength="85" style="width:100%"/><br />
+            <else />
+                $vbphrase[title]:<br />
+                <input type="text" class="bginput" name="subject" value="$subject" size="20" maxlength="85" style="width:100%"/><br />
+            </if>
+$vbphrase[message]:<br />
+<textarea name="message" rows="10" cols="15" style="width:100%; height:100px"></textarea>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="f" value="$forumid" />
+<input type="hidden" name="do" value="postthread" />
+<input type="hidden" name="posthash" value="$posthash" />
+<input type="hidden" name="poststarttime" value="$poststarttime" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="submit" class="button" name="sbutton" value="$vbphrase[submit]" accesskey="s"  />
+</div>
+</form>
+$footer
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Page Navigation">
+		<template name="pagenav" templatetype="template" date="1305252532" username="dartho" version="3.8.7"><![CDATA[<if condition="$show['first']">
+<span class="first_last"><a rel="start" id="btn" href="$address$address2
+<if condition="$anchor">#$anchor</if>" title="$vbphrase[first_page] - <phrase 1="$firstnumbers[first]" 2="$firstnumbers[last]" 3="$total">$vbphrase[results_x_to_y_of_z]</phrase>">$vbphrase[first]</a></span>
+</if>
+		<if condition="$show['first']">
+		<span class="separator">...</span>
+		</if>
+		$pagenav
+		<if condition="$show['last']">
+		<span class="separator">...</span>
+		</if>
+<if condition="$show['last']">
+<span class="first_last"><a id="btn" href="$address$address2&amp;page=$totalpages<if condition="$anchor">#$anchor</if>" title="$vbphrase[last_page] - <phrase 1="$lastnumbers[first]" 2="$lastnumbers[last]" 3="$total">$vbphrase[results_x_to_y_of_z]</phrase>">$vbphrase[last]</a></span>
+</if>
+
+]]></template>
+		<template name="pagenav_curpage" templatetype="template" date="1305252551" username="dartho" version="3.8.7"><![CDATA[<strong><span id="btn">$curpage</span></strong>
+ ]]></template>
+		<template name="pagenav_pagelink" templatetype="template" date="1305252575" username="dartho" version="3.8.7"><![CDATA[<a id="btn" href="$address$address2<if condition="$curpage != 1">&amp;page=$curpage</if>" title="<phrase 1="$pagenumbers[first]" 2="$pagenumbers[last]" 3="$total">$vbphrase[show_results_x_to_y_of_z]</phrase>">$curpage</a>&nbsp;]]></template>
+		<template name="pagenav_pagelinkrel" templatetype="template" date="1305252603" username="dartho" version="3.8.7"><![CDATA[<a class="smallfont" id="btn" href="$address$address2<if condition="$curpage != 1">&amp;page=$curpage</if>" title="<phrase 1="$pagenumbers[first]" 2="$pagenumbers[last]" 3="$total">$vbphrase[show_results_x_to_y_of_z]</phrase>"><!--$relpage-->$curpage</a>&nbsp;]]></template>
+	</templategroup>
+	<templategroup name="Private Message">
+		<template name="pm_messagelist" templatetype="template" date="1305262872" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">PM: $foldername</div>
+<if condition="$show['messagelist']">
+<if condition="$show['pagenav']">
+  <if condition="$pagenav">$pagenav</if>
+</if>
+
+$messagelist_periodgroups
+
+
+<if condition="$show['pagenav']"><if condition="$pagenav">$pagenav</if></if>
+</if>
+
+<if condition="$show['pmstats']">
+<div class="titlebg">$vbphrase[private_messages]</div>
+</if>
+<div class="windowbg" >
+$cpnav[pmfolders]
+<a href="private.php?$session[sessionurl]">$vbphrase[list_messages]</a><br />
+</div>
+<div class="windowbg" style="margine:6px;">
+<a id="btn" href="private.php?$session[sessionurl]do=newpm">$vbphrase[send_new_message]</a>
+</div>
+
+]]></template>
+		<template name="pm_messagelistbit" templatetype="template" date="1305262843" username="dartho" version="3.8.7"><![CDATA[<if condition="$show['unread']">
+<div class="new"><a href="private.php?$session[sessionurl]do=showpm&amp;pmid=$pm[pmid]">$pm[title]</a><else />
+<div class="thread"><a href="private.php?$session[sessionurl]do=showpm&amp;pmid=$pm[pmid]">$pm[title]</a> </if>
+</div>
+<div class="windowbg">$pm[senddate],&nbsp;$pm[sendtime] - from: $userbit</div>
+
+]]></template>
+		<template name="pm_messagelistbit_user" templatetype="template" date="1206445450" username="dartho" version="3.8.7"><![CDATA[$username]]></template>
+		<template name="pm_messagelist_periodgroup" templatetype="template" date="1305262964" username="dartho" version="3.8.7"><![CDATA[$messagelistbits
+]]></template>
+		<template name="pm_newpm" templatetype="template" date="1305262971" username="dartho" version="3.8.7"><![CDATA[<form action="private.php" method="post">
+<div>
+<div class="titlebg">$vbphrase[send_new_message]</div>
+<div>$vbphrase[recipient_usernames]:</div>
+<input type="text" style="width:100%" name="recipients" value="$pm[recipients]" tabindex="1" />
+<if condition="$show['sendmax']"><div><phrase 1="$permissions[pmsendmax]">$vbphrase[may_send_x_messages_a_time]</phrase></div></if>
+<div>$vbphrase[separate_multiple_names]</div>
+$vbphrase[title]:<br />
+<input type="text" name="title" value="$pm[title]" maxlength="85" style="width:100%" tabindex="1" />
+<div>$vbphrase[message]:</div>		
+<textarea name="message" rows="20" cols="20" style="width:100%; height:100px" tabindex="1"></textarea>
+<div>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="do" value="insertpm" />
+<input type="hidden" name="pmid" value="$pm[pmid]" />
+<input type="hidden" name="forward" value="$pm[forward]" />
+<input type="hidden" name="receipt" value="0" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="submit" class="button" name="sbutton" value="$vbphrase[submit]" accesskey="s" tabindex="1" />
+</div>
+<br />
+
+$vbphrase[additional_options]<br />
+<label for="cb_savecopy">
+<input type="checkbox" name="savecopy" value="1" id="cb_savecopy" tabindex="1" $checked[savecopy] /><phrase 1="private.php?$session[sessionurl]folderid=-1">Save a copy</phrase></label>
+<if condition="$bbuserinfo['signature']">
+<label for="cb_signature"><input type="checkbox" name="signature" value="1" id="cb_signature" tabindex="1" $checked[signature] />$vbphrase[show_your_signature]</label></if>
+</div>
+</form>
+]]></template>
+		<template name="pm_showpm" templatetype="template" date="1305262980" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">$pm[title]</div>
+$postbit
+]]></template>
+	</templategroup>
+	<templategroup name="Poll">
+		<template name="polloptions_table" templatetype="template" date="1212150802" username="dartho" version="3.8.7"><![CDATA[<form action="poll.php?do=pollvote&amp;pollid=$pollinfo[pollid]" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="pollvote" />
+<input type="hidden" name="pollid" value="$pollinfo[pollid]" />
+
+<div class="windowbg2">
+	$vbphrase[poll]<span class="normal">: $pollinfo[question]</span>
+</div>
+<if condition="$show['pollenddate']">
+<div>
+	<span class="thead" align="center" style="font-weight:normal"><phrase 1="$pollenddate" 2="$pollendtime">$vbphrase[this_poll_will_close_on_x_at_y]</phrase></span>
+</div>
+</if>
+<div style="width:$stylevar[formwidth]" align="$stylevar[left]">
+	<if condition="$show['publicwarning']">
+		<div class="fieldset">$vbphrase[public_poll_users_see_choices]</div>
+	</if>
+
+	<div style="padding:$stylevar[formspacer]px">
+		<div style="margin-bottom:$stylevar[formspacer]px"><strong>$pollinfo[question]</strong></div>
+		$pollbits
+	</div>
+
+	<span style="float:$stylevar[right]"><a href="poll.php?$session[sessionurl]do=showresults&amp;pollid=$pollinfo[pollid]">$vbphrase[view_poll_results]</a></span>
+	<input type="submit" class="button" value="$vbphrase[vote_now]" />
+
+</div>
+
+</form>
+
+<br />]]></template>
+		<template name="pollresult" templatetype="template" date="1212151373" username="dartho" version="3.8.7"><![CDATA[<div class="windowbg">
+	<span>
+		<if condition="$option['uservote']">
+			<em>$option[question]</em>
+		<else />
+			$option[question]
+		</if>
+		<if condition="$show['pollvoters']"><div class="alt2 smallfont" style="border:inset 1px; margin-top:$stylevar[cellpadding]px; padding:$stylevar[cellpadding]px">$names</div></if>
+	</span>
+	<span><strong>$option[votes]</strong></span>
+	<span>$option[percent]%</span>
+</div>
+]]></template>
+		<template name="pollresults" templatetype="template" date="1290151921" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $vbphrase[view_poll_results]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$pollresults
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="pollresults_table" templatetype="template" date="1212151386" username="dartho" version="3.8.7"><![CDATA[<div>
+	$vbphrase[view_poll_results]<span class="normal">: $pollinfo[question]</span>
+</div>
+<if condition="$show['pollenddate']">
+<div>
+<phrase 1="$pollenddate" 2="$pollendtime">$vbphrase[this_poll_will_close_on_x_at_y]</phrase>
+</div>
+</if>
+$pollbits
+<div>
+	<if condition="$show['multiple']">$vbphrase[multiple_choice_poll] </if>$vbphrase[voters]: <strong>$pollinfo[numbervotes]</strong>. $pollstatus</span>
+</div>]]></template>
+	</templategroup>
+	<templategroup name="Postbit">
+		<template name="postbit" templatetype="template" date="1305254241" username="dartho" version="3.8.7"><![CDATA[<div class="$post[statustitle]windowbg2" id="post$post[postid]">
+<a name="post$post[postid]"></a>
+<a href="member.php?userid=$post[userid]">$post[username]</a> $post[posttime] $post[postdate]
+</div>
+<div class="windowbg">$post[message]<br />
+
+		<!-- attachments -->
+		<if condition="$show['attachments']">
+			<div><span>Attached: </span>
+			<if condition="$show['thumbnailattachment']">
+					<span>$post[thumbnailattachments]<br /></span>
+			</if>
+		
+			<if condition="$show['imageattachment']">
+					<span>$post[imageattachments]<br /></span>
+			</if>
+			
+			<if condition="$show['imageattachmentlink']">
+					<span>$post[imageattachmentlinks]<br /></span>
+			</if>
+			
+			<if condition="$show['otherattachment']">
+					<span>$post[otherattachments]<br /></span>
+			</if>
+			
+			<if condition="$show['moderatedattachment']">
+					<span>$post[moderatedattachments]<br /></span>
+			</if>
+			
+			</div>
+		<!-- / attachments -->
+		</if>
+</div>
+<div class="windowbg" align="right"><if condition="$post['editlink']"><a id="btn" href="$post[editlink]">$vbphrase[edit]</a></if>
+<if condition="$post['replylink']"><a  id="btn"href="$post[replylink]">$vbphrase[reply]</a></if>
+</div>
+]]></template>
+		<template name="postbit_attachment" templatetype="template" date="1305262986" username="dartho" version="3.8.7"><![CDATA[<a href="attachment.php?$session[sessionurl]attachmentid=$attachment[attachmentid]&amp;d=$attachment[dateline]"<if condition="$show['newwindow']"> target="_blank"</if>>$attachment[filename] ($attachment[filesize])</a>&nbsp;]]></template>
+		<template name="postbit_attachmentimage" templatetype="template" date="1213628874" username="dartho" version="3.8.7"><![CDATA[<a href="attachment.php?$session[sessionurl]attachmentid=$attachment[attachmentid]&amp;d=$attachment[dateline]" target="_blank">$attachment[filename] ($attachment[filesize])</a>&nbsp;]]></template>
+		<template name="postbit_attachmentmoderated" templatetype="template" date="1213628885" username="dartho" version="3.8.7"><![CDATA[<if condition="$show['modattachmentlink']">
+<a href="attachment.php?$session[sessionurl]attachmentid=$attachment[attachmentid]&amp;d=$attachment[dateline]"<if condition="$show['newwindow']"> target="_blank"</if>>$attachment[filename]</a> ($attachment[filesize])<else />$attachment[filename] ($attachment[filesize])&nbsp;
+</if>]]></template>
+		<template name="postbit_attachmentthumbnail" templatetype="template" date="1305262991" username="dartho" version="3.8.7"><![CDATA[<a href="attachment.php?$session[sessionurl]attachmentid=$attachment[attachmentid]&amp;d=$attachment[dateline]" target="_blank">$attachment[filename] ($attachment[filesize])</a>&nbsp;]]></template>
+		<template name="postbit_deleted" templatetype="template" date="1185586737" username="dartho" version="3.8.7"><![CDATA[<div class="windowbg2">$post[username] $post[postdate]<if condition="!$show['detailedtime']">, $post[posttime]</if> $post[firstnewinsert]
+</div>
+
+<div>
+<span>
+<phrase 1="member.php?$session[sessionurl]u=$post[del_userid]" 2="$post[del_username]">$vbphrase[message_deleted_by_x]</phrase>
+</span>
+<if condition="$show['managepost']">
+<span>
+<a href="postings.php?$session[sessionurl]do=managepost&amp;p=$post[postid]">$vbphrase[manage]</a>
+</span>
+</if>
+
+<if condition="$post['del_reason']">
+<span>
+$vbphrase[reason]: <em>$post[del_reason]</em>
+</span>
+</if>
+</div>
+			
+]]></template>
+		<template name="postbit_legacy" templatetype="template" date="1305262996" username="dartho" version="3.8.7"><![CDATA[<div class="$post[statustitle]windowbg2" id="post$post[postid]">
+<a name="post$post[postid]"></a>
+<a href="member.php?userid=$post[userid]">$post[username]</a> $post[posttime] $post[postdate]
+</div>
+<div class="windowbg">$post[message]<br />
+
+		<!-- attachments -->
+		<if condition="$show['attachments']">
+			<div><span>Attached: </span>
+			<if condition="$show['thumbnailattachment']">
+					<span>$post[thumbnailattachments]<br /></span>
+			</if>
+		
+			<if condition="$show['imageattachment']">
+					<span>$post[imageattachments]<br /></span>
+			</if>
+			
+			<if condition="$show['imageattachmentlink']">
+					<span>$post[imageattachmentlinks]<br /></span>
+			</if>
+			
+			<if condition="$show['otherattachment']">
+					<span>$post[otherattachments]<br /></span>
+			</if>
+			
+			<if condition="$show['moderatedattachment']">
+					<span>$post[moderatedattachments]<br /></span>
+			</if>
+			
+			</div>
+		<!-- / attachments -->
+		</if>
+</div>
+<div class="windowbg">
+<if condition="$post['editlink']"><a id="btn" href="$post[editlink]">$vbphrase[edit]</a></if>
+<if condition="$post['replylink']"><a id="btn" href="$post[replylink]">$vbphrase[reply]</a></if>
+</div>
+]]></template>
+		<template name="postbit_wrapper" templatetype="template" date="1182608130" username="dartho" version="3.8.7"><![CDATA[$postbit
+]]></template>
+	</templategroup>
+	<templategroup name="Post Icon">
+		<template name="posticonbit" templatetype="template" date="1157201885" username="dartho" version="3.8.7" />
+		<template name="posticons" templatetype="template" date="1305263001" username="dartho" version="3.8.7" />
+	</templategroup>
+	<templategroup name="Registration">
+		<template name="register" templatetype="template" date="1305261495" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<style type="text/css">
+/* ***** red and green boxes for username verification used during registration ***** */
+.greenbox { border: 1px solid #337733; background: #bbffbb; color: #337733; padding: 3px; }
+.redbox { border:1px solid #773333; background: #ffbbbb; color: #773333; padding: 3px; }
+</style>
+<title>$vboptions[bbtitle] - <if condition="$show['coppa']">$vbphrase[coppa] </if>$vbphrase[registration]</title>
+</head>
+<body>
+
+<div class="bodywrapping">
+$header
+<div class="navbar">
+<a href="index.php$session[sessionurl_q]">$vbphrase[forum]</a>
+<if condition="$show['member']">
+<a href="search.php?$session[sessionurl]do=getnew">$vbphrase[new_posts]</a>
+<a href="usercp.php$session[sessionurl_q]"><if condition="$vbulletin->userinfo[pmunread]>0"><strong>*$vbphrase[user_cp]*</strong><else />$vbphrase[user_cp]</if></a><else />
+<a href="search.php?$session[sessionurl]do=getdaily">$vbphrase[todays_posts]</a>
+</if>
+<a href="search.php$session[sessionurl_q]">$vbphrase[search]</a>
+</div>
+
+<if condition="!$show['member']">
+<div>
+<form class="navbarbelow" action="login.php?do=login" method="post">
+<input onclick="this.value='';" name="vb_login_username" class="windowbg" id="navbar_username" accesskey="1" value="Username" size="8" type="text"> 
+<input type="password" class="windowbg" size="10" name="vb_login_password" id="navbar_password" accesskey="2" />
+<input name="cookieuser" value="1" type="checkbox">
+<input name="securitytoken" value="guest" type="hidden">
+&nbsp;<input id="btn" value="Log in" title="Enter your username and password in the boxes provided to login, or click the 'register' button to create a profile for yourself." accesskey="3" type="submit">
+<input name="s" value="" type="hidden">
+<input name="do" value="login" type="hidden">
+<input name="vb_login_md5password" type="hidden">
+<input name="vb_login_md5password_utf" type="hidden">
+</form>
+</div>
+</if>
+
+
+
+
+<if condition="$show['coppa']">
+	<div>$vbphrase[until_receive_signed_form]</div>
+</if>
+
+<if condition="$show['errors']">
+		<div class="titlebg">$vbphrase[errors_occurred_during_registration]</div>
+		<div class="windowbg"><ul>$errorlist</ul></div>
+</if>
+
+<script type="text/javascript" src="clientscript/vbulletin_md5.js?v=$vboptions[simpleversion]"></script>
+<script type="text/javascript">
+function verify_passwords(password1, password2)
+{
+	// do various checks, this will save people noticing mistakes on next page
+	if (password1.value == '' || password2.value == '')
+	{
+		alert('$vbphrase[fill_out_both_password_fields]');
+		return false;
+	}
+	else if (password1.value != password2.value)
+	{
+		alert('$vbphrase[entered_passwords_do_not_match]');
+		return false;
+	}
+	else
+	{
+		<if condition="$show['coppa']">
+		pass_copy = password1.value;
+		passconfirm_copy = password2.value;
+		</if>
+
+		var junk_output;
+
+		md5hash(password1, document.forms.register.password_md5, junk_output, $show[nopasswordempty]);
+		md5hash(password2, document.forms.register.passwordconfirm_md5, junk_output, $show[nopasswordempty]);
+
+		<if condition="$show['coppa']">
+		document.forms.register.password.value = pass_copy;
+		document.forms.register.passwordconfirm.value = passconfirm_copy;
+		</if>
+
+		return true;
+	}
+	return false;
+}
+</script>
+
+<form action="register.php?do=addmember" name="register" method="post" onsubmit="return verify_passwords(password, passwordconfirm);">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="addmember" />
+<input type="hidden" name="url" value="$url" />
+<input type="hidden" name="agree" value="$agree" />
+<input type="hidden" name="password_md5" />
+<input type="hidden" name="passwordconfirm_md5" />
+<if condition="!$show['birthday']">
+	<input type="hidden" name="day" value="$day" />
+	<input type="hidden" name="month" value="$month" />
+	<input type="hidden" name="year" value="$year" />
+</if>
+<if condition="$show['coppa']">
+	<input type="hidden" name="coppauser" value="1" />
+</if>
+
+<div class="titlebg"><phrase 1="$vboptions[bbtitle]">$vbphrase[register_at_x]</phrase></div>
+			<div class="thread">$vbphrase[registration]</div>
+			<div class="windowbg">
+				<div>$vbphrase[username]:</div>
+				<div><input class="bginput" id="regusername" type="text" name="username" size="50" maxlength="$vboptions[maxuserlength]" value="$username" /><img src="$vboptions[cleargifurl]" id="reg_verif_image" onclick="return toggle_collapse('dialog_box')" style="display:none;" alt="" /></div>
+				<div id="collapseobj_dialog_box"><div id="reg_verif_div" style="display:none;"></div></div>
+				<script type="text/javascript" src="clientscript/vbulletin_ajax_nameverif.js?v=$vboptions[simpleversion]"></script>
+				<script type="text/javascript">
+				<!--
+				regname_verif = new vB_AJAX_NameVerify('regname_verif', 'regusername');
+				//-->
+				</script>
+				<div>$vbphrase[password]:</div>
+						<div><input type="password" class="bginput" name="password" size="25" maxlength="50" value="$password" /></div>
+				<div>$vbphrase[confirm_password]:</div>
+						<div><input type="password" class="bginput" name="passwordconfirm" size="25" maxlength="50" value="$passwordconfirm" /></div>
+				<div>$vbphrase[email_address]:</div>
+						<div><input type="text" class="bginput" name="email" size="25" maxlength="50" value="$email" dir="ltr" /></div>
+				<div>$vbphrase[confirm_email_address]:</div>
+						<div><input type="text" class="bginput" name="emailconfirm" size="25" maxlength="50" value="$emailconfirm" dir="ltr" /><br /></div>
+				<if condition="$show['coppa']">
+				<div>$vbphrase[if_under_13_provide_parent]</div>
+						<div>$vbphrase[parent_guardian_email]</div>
+						<div><input type="text" class="bginput" name="parentemail" size="25" maxlength="50" value="$parentemail" dir="ltr" /></div>
+				</if>
+
+			</div>
+			$human_verify
+
+
+<if condition="$show['customfields_profile']">
+<div class="titlebg">$vbphrase[additional_required_information_profile]</div>
+	<div class="windowbg">
+
+			$customfields_profile
+
+			<if condition="$show['birthday']">$birthdayfields</if>
+
+	</div>
+<br />
+</if>
+
+<if condition="$show['customfields_option']">
+<div class="titlebg">$vbphrase[additional_required_information_option]</div>
+	<div class="windowbg" align="$stylevar[left]">
+		$customfields_option
+
+	</div>
+<br />
+</if>
+
+<div class="thread">$vbphrase[additional_information]</div>
+		<div class="windowbg">
+			<if condition="$show['referrer']">
+			<div>$vbphrase[referrer]:</div>
+							<div><input id="referrerfield_txt" type="text" class="bginput" name="referrername" value="$referrername" size="50" maxlength="$vboptions[maxuserlength]" /></div>
+						<if condition="$show['popups']">
+							<div id="referrerfield_menu" class="vbmenu_popup" style="display:none; z-index:50"></div>
+							<script type="text/javascript" src="clientscript/vbulletin_ajax_namesugg.js?v=$vboptions[simpleversion]"></script>
+							<script type="text/javascript">
+							<!--
+								vbmenu_register('referrerfield', true);
+								rnc = new vB_AJAX_NameSuggest('rnc', 'referrerfield_txt', 'referrerfield');
+								rnc.allow_multiple = false;
+							//-->
+							</script>
+						</if>
+			</if>
+		</div>
+<div class="thread">$vbphrase[time_zone]</div>
+	<div class="windowbg"><select name="timezoneoffset" id="sel_timezoneoffset">
+		$timezoneoptions
+	</select>
+	</div>
+	<div class="thread">$vbphrase[allow_daylight_savings_time]</div>
+	<div class="windowbg">
+		<select name="dst" id="sel_dst">
+			<option value="2" $selectdst[2]>$vbphrase[automatically_detect_dst_settings]</option>
+			<option value="1" $selectdst[1]>$vbphrase[dst_corrections_always_on]</option>
+			<option value="0" $selectdst[0]>$vbphrase[dst_corrections_always_off]</option>
+		</select>
+	</div>
+	<div class="thread">$vbphrase[receive_email]</div>
+	<div class="windowbg">
+		<div><input type="checkbox" name="options[adminemail]" value="1" id="cb_adminemail" $checkedoff[adminemail] />$vbphrase[receive_email_from_bulletin_board_staff]</div>
+		<if condition="$show['email']">
+		<div><input type="checkbox" name="options[showemail]" value="1" id="cb_showemail" $checkedoff[showemail] />$vbphrase[receive_email_from_other_members]</div>
+		</if>
+	</div>
+		$customfields_other
+
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[complete_registration]" accesskey="s" />
+		<input type="reset" class="button" name="Reset" value="$vbphrase[reset_fields]" />
+	</div>
+
+</form>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="register_rules" templatetype="template" date="1305257076" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - <if condition="$show['coppa']">$vbphrase[coppa_rules]<else />$vbphrase[forum_rules]</if></title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+
+
+<div class="navbar">
+<a href="index.php$session[sessionurl_q]">$vbphrase[forum]</a>
+<if condition="$show['member']">
+<a href="search.php?$session[sessionurl]do=getnew">$vbphrase[new_posts]</a>
+<a href="usercp.php$session[sessionurl_q]"><if condition="$vbulletin->userinfo[pmunread]>0"><strong>*$vbphrase[user_cp]*</strong><else />$vbphrase[user_cp]</if></a><else />
+<a href="search.php?$session[sessionurl]do=getdaily">$vbphrase[todays_posts]</a>
+</if>
+<a href="search.php$session[sessionurl_q]">$vbphrase[search]</a>
+</div>
+
+<if condition="!$show['member']">
+<div>
+<form class="navbarbelow" action="login.php?do=login" method="post">
+<input onclick="this.value='';" name="vb_login_username" class="windowbg" id="navbar_username" accesskey="1" value="Username" size="8" type="text"> 
+<input type="password" class="windowbg" size="10" name="vb_login_password" id="navbar_password" accesskey="2" />
+<input name="cookieuser" value="1" type="checkbox">
+<input name="securitytoken" value="guest" type="hidden">
+&nbsp;<input id="btn" value="Log in" title="Enter your username and password in the boxes provided to login, or click the 'register' button to create a profile for yourself." accesskey="3" type="submit">
+<input name="s" value="" type="hidden">
+<input name="do" value="login" type="hidden">
+<input name="vb_login_md5password" type="hidden">
+<input name="vb_login_md5password_utf" type="hidden">
+</form>
+</div>
+</if>
+
+
+<form action="register.php?do=register" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="register" />
+<input type="hidden" name="url" value="$url" />
+<input type="hidden" name="month" value="$month" />
+<input type="hidden" name="day" value="$day" />
+<input type="hidden" name="year" value="$year" />
+<if condition="$show['coppa']">
+<input type="hidden" name="who" value="coppa" />
+<else />
+<input type="hidden" name="who" value="adult" />
+</if>
+
+<div class="titlebg"><phrase 1="$vboptions[bbtitle]">$vbphrase[x_rules]</phrase></div>
+<div class="windowbg">$vbphrase[to_proceed_must_agree]</div>
+<div class="windowbg">
+
+							<if condition="$show['coppa']">
+							<!-- coppa regulations -->
+							<p><strong>$vbphrase[coppa_policy]</strong></p>
+
+							<phrase 1="$vboptions[bbtitle]" 2="$vboptions[forumhome].php$session[sessionurl_q]" 3="register.php?$session[sessionurl]do=coppaform" 4="$vboptions[webmasteremail]">$vbphrase[coppa_rules_description]</phrase>
+							<!-- / coppa regulations -->
+							</if>
+
+							<!-- regular forum rules -->
+							<phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_registration]</phrase>
+							<phrase 1="$vboptions[forumhome].php$session[sessionurl_q]" 2="$vboptions[bbtitle]">$vbphrase[forum_rules_description]</phrase>
+							<!-- regular forum rules -->
+
+						</div>
+						<div><label for="cb_rules_agree"><input type="checkbox" name="agree" id="cb_rules_agree" value="1" /><strong><phrase 1="$vboptions[bbtitle]">$vbphrase[read_agree_abide_by_rules]</phrase></strong></label></div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[register]" accesskey="s" />
+	</div>
+
+</form>
+
+
+$footer
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Search">
+		<template name="search_forums" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - <if condition="$show['searchthread']">$vbphrase[search_thread]<else />$vbphrase[search_forums]</if></title>
+$tag_cloud_headinclude
+</head>
+
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+	<div>
+		<span>$vbphrase[search_forums]</span>
+	</div>
+	<div>
+	<form action="search.php?do=process" method="post">
+		<input type="hidden" name="do" value="process" />
+		<input type="hidden" name="quicksearch" value="1" />
+		<input type="hidden" name="childforums" value="1" />
+		<input type="hidden" name="exactname" value="1" />
+		<input type="hidden" name="s" value="$session[sessionhash]" />
+		<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+		<div><input type="text" class="bginput" name="query" size="25" tabindex="1001" /><input type="submit" class="button" value="$vbphrase[go]" tabindex="1004" /></div>
+		<div style="margin-top:$stylevar[cellpadding]px">
+						<label for="rb_nb_sp0"><input type="radio" name="showposts" value="0" id="rb_nb_sp0" tabindex="1002" checked="checked" />$vbphrase[show_threads]</label>
+						&nbsp;
+						<label for="rb_nb_sp1"><input type="radio" name="showposts" value="1" id="rb_nb_sp1" tabindex="1003" />$vbphrase[show_posts]</label>
+		</div>
+	</form>
+		</div>
+	</div>
+
+<if condition="$tag_cloud">
+	<div style="margin-top:20px">$tag_cloud</div>
+</if>
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="search_results" templatetype="template" date="1305256327" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $vbphrase[search_results]</title>
+
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<if condition="$pagenav">$pagenav</if>
+
+<div class="titlebg">
+<if condition="$action == 'getnew'">$vbphrase[new_posts_nav]
+<else />
+$vbphrase[posts_from_last_day]
+</if>
+</div>
+$searchbits
+
+<if condition="$pagenav">$pagenav</if>
+
+<div class="footlink" style="padding:4px;"><a id="btn" href="forumdisplay.php?$session[sessionurl]do=markread&amp;markreadhash=$bbuserinfo[securitytoken]" rel="nofollow">$vbphrase[mark_forums_read]</a></div>
+$footer
+</div>
+</body></html>
+]]></template>
+	</templategroup>
+	<templategroup name="Show Groups">
+		<template name="SHOWGROUPS" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $vbphrase[show_groups]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$moderatorbits">
+<!-- moderators -->
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat" colspan="4">$vbphrase[moderators]</td>
+</tr>
+<tr>
+	<td class="thead">&nbsp;</td>
+	<td class="thead" width="50%">$vbphrase[username]<if condition="$show['locationfield']"> / $vbphrase[location_perm]</if></td>
+	<td class="thead" width="50%">$vbphrase[forums]</td>
+	<if condition="$show['contactinfo']"><td class="thead">$vbphrase[contact]</td></if>
+</tr>
+$moderatorbits
+</table>
+<br />
+<!-- end moderators -->
+</if>
+
+$usergroups
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+<tr>
+	<td width="100%">&nbsp;</td>
+	<td>$forumjump</td>
+</tr>
+</table>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Show Thread">
+		<template name="SHOWTHREAD" templatetype="template" date="1305268199" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$thread[prefix_plain_html] $thread[title]<if condition="$pagenumber>1"> - <phrase 1="$pagenumber">$vbphrase[page_x]</phrase></if> - $vboptions[bbtitle]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$poll
+
+<if condition="$show['pagenav']">$pagenav</if>
+<div class="titlebg"><a href="forumdisplay.php?$session[sessionurl]f=$foruminfo[forumid]">$foruminfo[title_clean]</a>&gt;$thread[title]
+</div>
+$postbits
+
+<if condition="$show['tag_box']">
+<div class="windowbg2"><a href="tags.php$session[sessionurl_q]">$vbphrase[tags]</a>:$tag_list</div>
+</if>
+<if condition="$show['pagenav']">$pagenav</if>
+$ad_location[ad_showthread_beforeqr]
+<if condition="$show['member']">
+<div style="padding-right:6px;">
+<form action="newreply.php" method="post">
+<textarea wrap="virtual" name="message" rows="10" cols="30" style="height:100px;width:100%" tabindex="1">
+</textarea>
+<input type="hidden" name="wysiwyg" value="0" />
+<input type="hidden" name="fromquickreply" value="1" />
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="postreply" />
+<input type="hidden" name="t" value="$threadid" id="qr_threadid" />
+<input type="hidden" name="p" value="$qrpostid" id="qr_postid" />
+<input type="hidden" name="parseurl" value="1" />
+<input type="hidden" name="loggedinuser" value="$bbuserinfo[userid]" />
+<input type="submit" class="button" value="$vbphrase[submit_reply]" />
+</form>
+</div>
+</if>
+<div style="margin:5px;"><a id="btn" href="forumdisplay.php?$session[sessionurl]f=$foruminfo[forumid]">Up</a></div>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="showthread_quickreply" templatetype="template" date="1305263006" username="dartho" version="3.8.7"><![CDATA[<script type="text/javascript">
+<!--
+var WYSIWYG = $WYSIWYG;
+var threadedmode = $threadedmode;
+var minchars = $vboptions[postminchars];
+var maxchars = $vboptions[postmaxchars];
+var require_click = $QRrequireclick;
+var must_click_message = "$vbphrase[click_quick_reply_icon]";
+var istyles = new Array(); istyles = { $istyles_js };
+var normalmode = false;
+var vbphrase = {
+	// wysiwyg only
+	"wysiwyg_please_wait" : "$vbphrase[wysiwyg_please_wait]",
+	"wysiwyg_initialized" : "$vbphrase[wysiwyg_initialized]",
+	"wysiwyg_command_invalid" : "$vbphrase[wysiwyg_command_invalid]",
+	"moz_must_select_text" : "$vbphrase[moz_must_select_text]",
+	"moz_edit_config_file" : "$vbphrase[moz_edit_config_file]",
+	"enter_tag_option" : "$vbphrase[enter_tag_option]",
+	"must_select_text_to_use" : "$vbphrase[must_select_text_to_use]",
+	"browser_is_safari_no_wysiwyg" : "$vbphrase[browser_is_safari_no_wysiwyg]",
+	// standard only
+	"enter_text_to_be_formatted" : "$vbphrase[enter_text_to_be_formatted]",
+	"enter_link_text" : "$vbphrase[enter_link_text]",
+	"enter_list_type" : "$vbphrase[enter_list_type]",
+	"enter_list_item" : "$vbphrase[enter_list_item]",
+	// both
+	"must_enter_subject" : "$vbphrase[must_enter_subject]",
+	"message_too_short" : "$vbphrase[message_too_short]",
+	"enter_link_url" :  "$vbphrase[enter_link_url]",
+	"enter_image_url" : "$vbphrase[enter_image_url]",
+	"enter_email_link" : "$vbphrase[enter_email_link]"
+};
+//-->
+</script>
+	
+<form action="newreply.php" method="post" name="vbform" onsubmit="return checkQR(this);">
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<thead>
+	<tr>
+		<td class="tcat" colspan="2">
+			$vbphrase[quick_reply]
+		</td>
+	</tr>
+</thead>
+<tbody id="collapseobj_quickreply" style="$vbcollapse[collapseobj_quickreply]">
+<tr>
+	<td class="panelsurround" align="center">
+		<div class="panel">	
+			<table cellpadding="0" cellspacing="0" border="0" align="center">
+			<tr>
+				<td class="smallfont" align="$stylevar[left]">$vbphrase[message]:</td>
+			</tr>
+			<tr>
+				<td id="vBulletin_editor" align="$stylevar[left]">
+				<!-- <<<< indent back for ease of reading -->		
+
+
+
+<if condition="$WYSIWYG == 0">	
+<!-- no-toolbar quick reply -->
+
+	<div class="controlbar">
+		<textarea name="message" id="qr_message" class="bginput" style="width:600px; height:100px;" rows="5" cols="60" tabindex="1">
+</textarea>		
+	</div>
+
+<!-- / no-toolbar quick reply -->	
+</if>
+
+
+				<!-- >>>> outdent back to normal -->
+				</td>
+			</tr>
+			<tr>
+				<td align="$stylevar[left]">
+				
+					<fieldset class="fieldset" style="margin:$stylevar[formspacer]px 0px 0px 0px">
+						<legend>$vbphrase[options]</legend>
+						<div>
+							<if condition="$bbuserinfo['signature']">
+								<div style="float:$stylevar[right]">
+									<label for="cb_signature"><input type="checkbox" name="signature" value="1" id="cb_signature" tabindex="5" checked="checked" />$vbphrase[show_your_signature]</label>
+								</div>
+							</if>
+							<label for="qr_quickreply"><input type="checkbox" name="quickreply" value="1" id="qr_quickreply" accesskey="w" tabindex="4" />$vbphrase[quote_message_in_reply]</label>
+						</div>
+					</fieldset>
+				
+				</td>
+			</tr>
+			</table>
+		</div>
+		
+		<div style="margin-top:$stylevar[cellpadding]px">
+			<input type="hidden" name="fromquickreply" value="1" />
+			<input type="hidden" name="s" value="$session[sessionhash]" />
+			<input type="hidden" name="do" value="postreply" />
+			<input type="hidden" name="t" value="$threadid" id="qr_threadid" />
+			<input type="hidden" name="p" value="$qrpostid" id="qr_postid" />
+			<input type="hidden" name="parseurl" value="1" />
+			<input type="hidden" name="clickedelm" value="" />
+			<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+			<input type="submit" class="button" value="$vbphrase[post_quick_reply]" accesskey="s" title="(Alt + S)" name="sbutton" tabindex="2" onclick="this.form.clickedelm.value=this.value" />
+			<input type="submit" class="button" value="$vbphrase[go_advanced]" accesskey="x" title="(Alt + X)" name="preview" tabindex="3" id="qr_preview" onclick="this.form.clickedelm.value = this.value" />
+		</div>		
+	</td>
+</tr>
+</tbody>
+</table>
+
+</form>
+<br />
+
+<if condition="!is_browser('ie') AND $WYSIWYG == 2">
+	<!-- Mozilla work around for focusing on QR in WYSIWYG mode -->
+	<div id="qr_scroll"></div>
+</if>
+<script type="text/javascript" src="clientscript/vbulletin_quickreply.js"></script>
+<!-- END WYSWIWYG QUICK REPLY -->]]></template>
+		<template name="SHOWTHREAD_SHOWPOST" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $vbphrase[view_single_post] - $threadinfo[prefix_plain_html] $threadinfo[title]</title>
+</head>
+<body style="margin:0px" onload="self.focus()">
+
+<form action="showpost.php">
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" style="border-bottom-width:0px">
+<tr>
+	<td class="tcat">
+		<div class="smallfont" style="float:$stylevar[right]">
+			<strong>$vbphrase[thread]</strong>: $threadinfo[prefix_plain_html] <a style="text-decoration: underline" href="showthread.php?$session[sessionurl]p=$postinfo[postid]#post$postinfo[postid]">$threadinfo[title]</a>
+		</div>
+		$vbphrase[view_single_post]
+	</td>
+</tr>
+</table>
+
+<if condition="$show['reputation']">
+<script type="text/javascript" src="clientscript/vbulletin_ajax_reputation.js?v=$vboptions[simpleversion]"></script>
+</if>
+
+$postbits
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" style="border-top-width:0px">
+<tr>
+	<td class="tfoot" align="center">
+		<input type="button" class="button" value="$vbphrase[close_this_window]" id="close_button" style="display: none;" />
+		&nbsp;
+		<script type="text/javascript">
+		<!--
+		if (self.opener)
+		{
+			var close_button = fetch_object('close_button');
+			close_button.style.display = '';
+			close_button.onclick = function() { self.close(); };
+		}
+		//-->
+		</script>
+	</td>
+</tr>
+</table>
+
+</form>
+
+<if condition="$show['lightbox']">
+<!-- lightbox scripts -->
+	<script type="text/javascript" src="clientscript/vbulletin_lightbox.js?v=$vboptions[simpleversion]"></script>
+	<script type="text/javascript">
+	<!--
+	vBulletin.register_control("vB_Lightbox_Container", "td_post_$post[postid]", $vboptions[lightboxenabled]);
+	//-->
+	</script>
+<!-- / lightbox scripts -->
+</if>
+
+<script type="text/javascript">
+<!--
+	// Main vBulletin Javascript Initialization
+	vBulletin_init();
+//-->
+</script>
+
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Social Groups">
+		<template name="SOCIALGROUPS" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$mygroup_bits">
+<div class="titlebg" colspan="3">$vbphrase[you_are_a_member_of_the_following_groups]</div>
+<div class="windowbg">
+$mygroup_bits
+</div>
+</if>
+
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_accepttransfer" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_namesugg.js?v=$vboptions[simpleversion]"></script>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+	<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+	<tr>
+		<td class="tcat">$vbphrase[transfer_group_ownership]</td>
+	</tr>
+	<tr>
+		<td class="alt1" align="center">
+			<phrase 1="$group[name]">$vbphrase[accept_social_group_transfer_x]</phrase>
+		</td>
+	</tr>
+	<tr>
+		<td class="tfoot" align="center">
+			<form action="group.php?groupid=$group[groupid]" method="post">
+				<input type="hidden" name="do" value="doaccepttransfer" />
+				<input type="hidden" name="groupid" value="$group[groupid]" />
+				<input type="hidden" name="s" value="$session[sessionhash]" />
+				<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+				<input type="hidden" name="url" value="$url" />
+				<input class="button" type="submit" name="confirm" value="  $vbphrase[yes]  " />
+				<input class="button" type="submit" name="deny" value="  $vbphrase[no]  " />
+			</form>
+		</td>
+	</tr>
+	</table>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_addpictures" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$messages
+
+<form action="group.php?do=insertpictures&amp;groupid=$group[groupid]" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="insertpictures" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">$vbphrase[add_pictures_to_group]</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+		<div class="panel">
+			<div class="smallfont" align="$stylevar[left]" style="width:$stylevar[formwidth]">
+				<phrase 1="album.php?$session[sessionurl]u=$bbuserinfo[userid]">$vbphrase[may_add_pictures_group_paste_url]</phrase>
+				<hr size="1" style="color:$stylevar[tborder_bgcolor]; background-color:$stylevar[tborder_bgcolor]" />
+				$vbphrase[picture_urls]: <span class="shade">$vbphrase[one_url_per_line_paren]</span>
+				<div><textarea class="bginput" name="pictureurls" cols="50" rows="5" tabindex="1" style="width: 98%"></textarea></div>
+			</div>
+		</div>
+
+		<div style="margin-top:$stylevar[cellpadding]px">
+			<input type="submit" value="$vbphrase[add_pictures]" class="button" accesskey="s" tabindex="1" />
+		</div>
+	</td>
+</tr>
+</table>
+</form>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_categorylist" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $custompagetitle</title>
+$socialgroups_css
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" style="clear: both">
+<tr>
+	<td class="tcat" width="100%" colspan="6">
+		$vbphrase[social_group_categories]
+	</td>
+</tr>
+<tr>
+	$template_hook[group_categorylist_start_col]
+	<td class="thead" width="100%">
+		<a href="$titlesort">$vbphrase[category_name]</a> $sortarrow[title]
+	</td>
+	<td class="thead" align="center" nowrap="nowrap">
+		<a href="$groupsort">$vbphrase[groups]</a> $sortarrow[groups]
+	</td>
+	$template_hook[group_categorylist_end_col]
+</tr>
+$categorybits
+<tr>
+	<td colspan="6" align="center" class="tfoot smallfont">
+		<strong><a href="group.php?$session[sessionurl]do=search">$vbphrase[advanced_search]</a></strong>
+	</td>
+</tr>
+</table>
+
+<br />
+
+<div class="floatcontainer">
+	<if condition="$pagenav">
+	<div id="pagenav">
+		$pagenav
+	</div>
+	</if>
+</div>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_confirm" templatetype="template" date="1290151922" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<form action="$confirmaction" method="post">
+	<input type="hidden" name="do" value="$confirmdo" />
+	<input type="hidden" name="groupid" value="$group[groupid]" />
+	<if condition="$pictureinfo">
+		<input type="hidden" name="pictureid" value="$pictureinfo[pictureid]" />
+	</if>
+	<input type="hidden" name="s" value="$session[sessionhash]" />
+	<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+	<input type="hidden" name="url" value="$url" />
+
+	<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+	<tr>
+		<td class="tcat">$title_phrase</td>
+	</tr>
+	<tr>
+		<td class="alt1" align="center">$question_phrase<if condition="$extratext"><br /><br />$extratext</if></td>
+	</tr>
+	<tr>
+		<td class="tfoot" align="center">
+			<input class="button" type="submit" name="confirm" value="  $vbphrase[yes]  " />
+			<input class="button" type="submit" name="deny" value="  $vbphrase[no]  " />
+		</td>
+	</tr>
+	</table>
+</form>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_deletemessages" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<form action="group_inlinemod.php?gmids=$gmids" method="post" name="vbform">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="messageids" value="$messageids" />
+<input type="hidden" name="do" value="doinlinedelete" />
+<input type="hidden" name="url" value="$url"  />
+<input type="hidden" name="inline_discussion" value="$inline_discussion"  />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<if condition="$inline_discussion">
+			$vbphrase[delete_discussions]
+		<else />
+			$vbphrase[delete_messages]
+		</if>
+	</td>
+	
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]">
+
+		<fieldset class="fieldset">
+			<legend>$vbphrase[deletion_options]</legend>
+			<div style="padding:$stylevar[formspacer]px">
+				<if condition="$canremovemessages AND $candeletemessages">
+					<div class="fieldset">$vbphrase[how_would_you_like_to_delete]</div>
+				</if>
+				<if condition="$candeletemessages">
+					<div class="fieldset">
+						<label for="deletetype_1"><input type="radio" name="deletetype" value="1" id="deletetype_1" $checked[delete] />$vbphrase[soft_delete_leave_deleted_message]</label>
+					</div>
+				</if>
+
+				<if condition="$canremovemessages">
+					<div class="fieldset">
+						<label for="deletetype_2"><input type="radio" name="deletetype" value="2" id="deletetype_2" $checked[remove] />
+							$vbphrase[physically_remove]
+						</label>
+					</div>
+				</if>
+
+				<if condition="$candeletemessages">
+					<div class="fieldset">
+						<label for="deletereason">$vbphrase[reason_for_deletion]
+							<input type="text" class="bginput" name="deletereason" id="deletereason" value="" size="50" maxlength="125" style="display:block" />
+						</label>
+					</div>
+				</if>
+			</div>
+		</fieldset>
+
+		<if condition="$inline_discussion">
+			<div class="fieldset shade"><phrase 1="$discussioncount" 2="$groupcount">$vbphrase[deleting_x_discussions_from_y_social_groups]</phrase></div>
+		<else />
+			<div class="fieldset shade"><phrase 1="$messagecount" 2="$discussioncount" 3="$groupcount">$vbphrase[deleting_x_messages_in_y_discussions_from_z_social_groups]</phrase></div>
+		</if>
+		<if condition="$discussion_selected AND !$inline_discussion">
+			<div class="fieldset shade">$vbphrase[deleting_the_first_message]</div>
+		</if>
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[delete]" accesskey="s" />
+		<input type="button" class="button" value="$vbphrase[cancel]" accesskey="c" onclick="history.back(1)" />
+	</div>
+	</td>
+</tr>
+</table>
+
+</form>
+
+<br />
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_discussionview" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	$socialgroups_css
+	<script type="text/javascript" src="clientscript/vbulletin_quick_edit_generic.js?v=$vboptions[simpleversion]"></script>
+	<script type="text/javascript" src="clientscript/vbulletin_quick_edit_groupmessage.js?v=$vboptions[simpleversion]"></script>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$template_hook[group_discuss_before_messages]
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+<tr>
+	<td class="tcat" width="100%" valign="top">
+		<span class="smallfont" style="float:$stylevar[right];padding:$stylevar[cellspacing]px $stylevar[cellpadding]px">
+		<if condition="$groupoptions['join']">
+			<a href="group.php?$session[sessionurl]do=join&amp;groupid=$group[groupid]">$vbphrase[join_group]</a>
+		<else />
+			<if condition="!$group['membertype'] AND $group['type'] == 'inviteonly'">
+			$vbphrase[group_type_inviteonly]
+			</if>
+		</if>
+		</span>
+		$discussion[title]
+	</td>
+	<td class="vbmenu_control" id="discussiontools" nowrap="nowrap"><a href="$show[nojs_link]#goto_discussiontools" rel="nofollow">$vbphrase[discussion_tools]</a> <script type="text/javascript"> vbmenu_register("discussiontools"); </script></td>
+	<if condition="$show['inlinemod'] AND $show['popups']">
+		<td class="vbmenu_control"><a id="inlinemodsel"></a></td>
+	</if>
+</tr>
+</table>
+
+<!-- inline moderation form -->
+<form action="group_inlinemod.php?groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" method="post" id="group_message_inlinemod_form">
+
+<!-- messages -->
+<div class="list_no_decoration block_row" id="message_list">
+	$messagebits
+</div>
+
+$template_hook[group_discuss_after_messages]
+
+<if condition="$show['inlinemod'] OR $pagenav OR $show['postlink']">
+	<div class="floatcontainer">
+		<if condition="$pagenav">
+			<div id="discussion_pagenav">
+				$pagenav
+			</div>
+		</if>
+		<if condition="$show['inlinemod']">
+			<div id="discussion_moderation">
+				<div class="smallfont push_down"><label for="moderation_select_comments"><strong>$vbphrase[moderation]</strong></label></div>
+				<select id="moderation_select_comments" name="do">
+					<if condition="$show['delete'] OR $show['undelete'] OR $show['approve']">
+						<optgroup label="$vbphrase[option]" id="moderation_select_comments_optgroup">
+							<if condition="$show['delete']">
+								<option value="inlinedelete" id="inlinemod_comment_controls_delete">$vbphrase[delete_messages]</option>
+							</if>
+							<if condition="$show['undelete']">
+								<option value="inlineundelete" id="inlinemod_comment_controls_undelete">$vbphrase[undelete_messages]</option>
+							</if>
+							<if condition="$show['approve']">
+								<option value="inlineapprove" id="inlinemod_comment_controls_approve">$vbphrase[approve_messages]</option>
+								<option value="inlineunapprove" id="inlinemod_comment_controls_unapprove">$vbphrase[unapprove_messages]</option>
+							</if>
+						</optgroup>
+					</if>
+					<optgroup label="____________________">
+						<option value="clearmessage">$vbphrase[deselect_all_messages]</option>
+					</optgroup>
+				</select>
+				<input type="submit" value="$vbphrase[go]" id="gmessage_inlinego" class="button" />
+				<input type="hidden" name="s" value="$session[sessionhash]" />
+				<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+			</div>
+		</if>
+		<if condition="$show['postlink']"><div class="action_links"><a href="group.php?$session[sessionurl]do=message&amp;discussionid=$discussion[discussionid]" rel="nofollow"><img src="$stylevar[imgdir_button]/reply.gif" alt="$vbphrase[reply]" border="0" /></a></div></if>
+	</div>
+</if>
+
+
+<if condition="$show['inlinemod']">
+	<script type="text/javascript" src="clientscript/vbulletin_inlinemod.js?v=$vboptions[simpleversion]"></script>
+
+	<if condition="$show[popups]">
+		<script type="text/javascript">
+			<!--
+			inlineMod_comment = new vB_Inline_Mod('inlineMod_comment', 'gmessage', 'group_message_inlinemod_form', '$vbphrase[go_x]', 'vbulletin_inline', 'message');
+			vBmenu.register("inlinemodsel");
+			//-->
+		</script>
+
+		<!-- inline mod selection popup -->
+		<ul id="inlinemodsel_menu" class="vbmenu_popup list_no_decoration" style="display:none">
+			<li class="thead first">$vbphrase[from_this_page]</li>
+			<li class="vbmenu_option" onclick="inlineMod_comment.check_all(true)">$vbphrase[select_all]</li>
+			<li class="vbmenu_option" onclick="inlineMod_comment.check_all(false)">$vbphrase[deselect_all]</li>
+			<li class="vbmenu_option" onclick="inlineMod_comment.check_all('invert')">$vbphrase[invert_selection]</li>
+			<li class="thead"><img src="$vboptions[cleargifurl]" alt="" width="1" height="1" /></li>
+			<li class="vbmenu_option" onclick="inlineMod_comment.check_all(true, 1)">$vbphrase[select_unapproved_posts]</li>
+			<li class="vbmenu_option" onclick="inlineMod_comment.check_all(true, 2)">$vbphrase[select_deleted_posts]</li>
+		</ul>
+		<!-- / inline mod selection popup -->
+	</if>
+</if>
+
+</form>
+<!-- / inline moderation form -->
+
+<!-- discussion tools popup -->
+<ul id="discussiontools_menu" class="vbmenu_popup list_no_decoration" style="display:none">
+	<li class="thead first">$vbphrase[discussion_tools]</li>
+	<li class="vbmenu_option"><a href="group.php?$session[sessionurl]do=markread&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[mark_this_discussion_read]</a></li>
+	<if condition="$show[subscribe]">
+		<if condition="!$discussion[subscribed]">
+			<li class="vbmenu_option"><a href="group.php?$session[sessionurl]do=subscribe&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[subscribe_to_this_discussion]</a></li>
+		<else />
+			<li class="vbmenu_option"><a href="group.php?$session[sessionurl]do=unsubscribe&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[unsubscribe_from_this_discussion]</a></li>
+		</if>
+	</if>
+</ul>
+<!-- / discussion tools popup -->
+
+$template_hook[group_discuss_after_action_links]
+
+<if condition="$bookmarksites">
+<!-- social bookmarking links -->
+<br />
+<div class="tborder social_group">
+	<div class="thead">
+		$vbphrase[bookmarks]
+	</div>
+	<div class="alt2 block_row" style="padding-top:0px">
+		<ul style="list-style-type:none; margin:0px; padding:0px">$bookmarksites</ul>
+	</div>
+</div>
+<!-- / social bookmarking links -->
+</if>
+
+<br />
+
+$template_hook[group_discuss_after_bookmarks]
+
+<if condition="$show['quickcomment']">
+	<div class="social_group tborder panelsurround">
+		<div class="tcat block_title">
+			<if condition="$groupoptions['join'] OR $groupoptions['leave']">
+			<span class="smallfont" style="float:$stylevar[right]">
+				<if condition="$groupoptions['join']">
+						<a href="group.php?$session[sessionurl]do=join&amp;groupid=$group[groupid]">$vbphrase[join_group]</a>
+				<else />
+					<if condition="!$group['membertype'] AND $group['type'] == 'inviteonly'">
+							$vbphrase[group_type_inviteonly]
+					</if>
+				</if>
+				<if condition="$groupoptions['join'] AND $groupoptions['leave']">
+					&nbsp;|&nbsp;
+				</if>
+				<if condition="$groupoptions['leave']"><a href="group.php?$session[sessionurl]do=leave&amp;groupid=$group[groupid]">$groupoptions[leavephrase]</a></if>
+			</span>
+			</if>
+			$vbphrase[quick_reply]
+		</div>
+
+			$vBeditTemplate[clientscript]
+
+			<form action="group.php?$session[sessionurl]do=message" method="post" id="message_form">
+				<div class="panel">
+					<div align="center">
+						<div style="max-width:$stylevar[formwidth]; width:auto !important; width:$stylevar[formwidth_usercp]">
+
+							<div style="display:none" id="qc_error_div" class="tborder">
+								<div class="alt1 block_title">
+									<div id="qc_error_header">$vbphrase[errors_occured_when_submitted]</div>
+									<div id="qc_error_list">&nbsp;</div>
+									<div id="qc_error_okay"><input type="button" class="button" value="$vbphrase[okay]" id="qc_hide_errors" /></div>
+								</div>
+							</div>
+
+							<div class="smallfont messagetext">$vbphrase[message]: <if condition="$show['auto_moderation']"><span class="shade">$vbphrase[this_post_will_be_automatically_moderated]</span></if></div>
+							<div id="$editorid" class="vBulletin_editor">$messagearea</div>
+							<if condition="$allowed_bbcode"><div class="allowed_bbcode">$allowed_bbcode</div></if>
+							<div class="submit_button">
+								<input type="hidden" name="fromquickcomment" value="1" />
+								<input type="hidden" name="s" value="$session[sessionhash]" />
+								<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+								<input type="hidden" name="do" value="message" />
+								<input type="hidden" name="discussionid" value="$discussion[discussionid]" />
+								<input type="hidden" name="loggedinuser" value="$bbuserinfo[userid]" />
+								<input type="hidden" name="parseurl" value="1" />
+								<input type="hidden" name="lastcomment" value="$lastcomment" />
+								<input type="hidden" name="allow_ajax_qc" value="$show[allow_ajax_qc]" />
+							</div>
+						</div>
+					</div>
+
+					<div align="center" id="qc_posting_msg" style="display:none; margin-top:$stylevar[cellpadding]px">
+						<img class="inlineimg" src="$stylevar[imgdir_misc]/progress.gif" alt="$vbphrase[posting_comment] - $vbphrase[please_wait]" />
+						<strong>$vbphrase[posting_message_please_wait]</strong>
+					</div>
+
+				<script type="text/javascript" src="clientscript/vbulletin_quick_comment.js?v=$vboptions[simpleversion]"></script>
+							<script type="text/javascript">
+							<!--
+							var quick_comment = new vB_QuickComment("message_form", $vboptions[postminchars], 'DESC');
+							//-->
+				</script>
+				</div>
+
+				<div class="floatcontainer quick_reply_controls">
+					<input type="submit" id="qr_submit" value="$vbphrase[post_message]" name="sbutton" class="button" accesskey="s" onclick="clickedelm = this.value" />
+					<input type="submit" id="qr_preview" value="$vbphrase[go_advanced]" name="preview" class="button" accesskey="x" onclick="clickedelm = this.value" />
+				</div>
+			</form>
+	</if>
+</div><br />
+
+<if condition="$show['edit'] AND $show['popups']">
+<!-- ajax errors table -->
+	<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" style="display:none; position:absolute" id="ajax_post_errors">
+	<tr>
+		<td class="thead">
+			<span style="float:$stylevar[right]"><input type="button" class="button" value=" X " onclick="vB_QuickEditor_Watcher.hide_errors()" id="ajax_post_errors_closebtn" /></span>
+			$vbphrase[vbulletin_message]
+		</td>
+	</tr>
+	<tr>
+		<td class="alt2" colspan="2" id="ajax_post_errors_message">&nbsp;</td>
+	</tr>
+	<tr>
+		<td class="tfoot" colspan="2" align="center"><a href="#" onclick="vB_QuickEditor_Watcher.close_all(); return false;">$vbphrase[cancel_changes]</a></td>
+	</tr>
+	</table>
+<!-- / ajax errors table -->
+</if>
+
+<if condition="!$show[popups]">
+<!-- discussion tools -->
+	<br />
+	<div class="tborder social_group smallfont">
+		<a name="goto_discussiontools"></a>
+		<div class="thead">$vbphrase[discussion_tools]</div>
+		<div class="alt1 block_row">
+			<img class="inlineimg" src="$stylevar[imgdir_button]/subscribe.gif" alt="$vbphrase[mark_this_discussion_read]" vspace="1" /> <a href="group.php?$session[sessionurl]do=markread&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[mark_this_discussion_read]</a>
+		</div>
+
+		<if condition="$show[subscribe]">
+			<if condition="!$discussion[subscribed]">
+				<div class="alt1 block_row">
+					<img class="inlineimg" src="$stylevar[imgdir_button]/subscribe.gif" alt="$vbphrase[subscribe_to_this_discussion]" vspace="1" /> <a href="group.php?$session[sessionurl]do=subscribe&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[subscribe_to_this_discussion]</a>
+				</div>
+			<else />
+				<div class="alt1 block_row">
+					<img class="inlineimg" src="$stylevar[imgdir_button]/subscribe.gif" alt="$vbphrase[unsubscribe_from_this_discussion]" vspace="1" /> <a href="group.php?$session[sessionurl]do=unsubscribe&amp;groupid=$group[groupid]&amp;discussionid=$discussion[discussionid]" rel="nofollow">$vbphrase[unsubscribe_from_this_discussion]</a>
+				</div>
+			</if>
+		</if>
+	</div>
+<!-- / discussion tools -->
+</if>
+
+$template_hook[group_discuss_after_quick_reply]
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_editor" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+
+$navbar
+
+<if condition="$show['delete'] OR $show['physicaldeleteoption']">
+<form action="group.php?do=deletemessage&amp;gmid=$messageinfo[gmid]&amp;discussionid=$discussion[discussionid]" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="gmid" value="$messageinfo[gmid]" />
+<input type="hidden" name="do" value="deletemessage" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="page" value="$pagenumber" />
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<a style="float:$stylevar[right]" href="#top" onclick="return toggle_collapse('editpost_delete')"><img id="collapseimg_editpost_delete" src="$stylevar[imgdir_button]/collapse_tcat$vbcollapse[collapseimg_editpost_delete].gif" alt="" border="0" /></a>
+		<if condition="$delete_discussion">
+			$vbphrase[delete_group_discussion]
+		<else />
+		$vbphrase[delete_message]
+		</if>
+	</td>
+</tr>
+<tbody id="collapseobj_editpost_delete" style="$vbcollapse[collapseobj_editpost_delete]">
+	<tr>
+		<td class="panelsurround" align="center">
+		<div class="panel">
+			<div align="$stylevar[left]" style="max-width:$stylevar[formwidth]; width:auto !important; width:$stylevar[formwidth_usercp]">
+
+			<div class="fieldset">
+				<if condition="$delete_discussion">
+					$vbphrase[delete_discussion_check_appropriate_option]
+				<else />
+					$vbphrase[delete_message_check_appropriate_option]
+				</if>
+
+			</div>
+
+			<fieldset class="fieldset">
+				<legend>$vbphrase[deletion_options]</legend>
+				<div style="padding:$stylevar[formspacer]px">
+					<div>
+						<label for="rb_del_leave"><input type="radio" name="deletemessage" value="" id="rb_del_leave" tabindex="1" checked="checked" />
+							<if condition="$delete_discussion">$vbphrase[do_not_delete_discussion]<else />$vbphrase[do_not_delete_message]</if>
+						</label>
+					</div>
+					<if condition="$show['delete']">
+					<div>
+							<label for="rb_del_soft"><input type="radio" name="deletemessage" value="soft" id="rb_del_soft" tabindex="1" />
+								<if condition="$delete_discussion">$vbphrase[delete_discussion]<else />$vbphrase[delete_message]</if>
+							</label>
+					</div>
+					</if>
+					<if condition="$show['physicaldeleteoption']">
+					<div>
+						<label for="rb_del_hard"><input type="radio" name="deletemessage" value="remove" id="rb_del_hard" tabindex="1" />
+							<if condition="$delete_discussion">$vbphrase[physically_remove_discussion]<else />$vbphrase[physically_remove_message]</if>
+						</label>
+					</div>
+					</if>
+				</div>
+			</fieldset>
+
+			<div class="smallfont">
+				<div>$vbphrase[reason_for_deletion]:</div>
+				<input type="text" class="bginput" name="reason" size="50" tabindex="1" title="$vbphrase[optional]" />
+			</div>
+
+			</div>
+		</div>
+
+		<div style="margin-top:$stylevar[cellpadding]px">
+			<input type="submit" class="button" value="$vbphrase[delete]" tabindex="1" accesskey="d" />
+		</div>
+
+		</td>
+	</tr>
+</tbody>
+</table>
+</form>
+<br />
+</if>
+
+$postpreview
+
+<form action="group.php?do=message" name="vbform" method="post"<if condition="!is_browser('webtv')"> onsubmit="return vB_Editor['$editorid'].prepare_submit(0, $vboptions[postminchars])"</if>>
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<if condition="$show['edit']">
+			<span class="smallfont" style="float:$stylevar[right]"><strong>$vbphrase[social_group]</strong>: <a href="group.php?$session[sessionurl]groupid=$group[groupid]">$group[name]</a></span>
+			<if condition="$edit_discussion">
+				$vbphrase[edit_discussion]
+		<else />
+				$vbphrase[edit_message]
+		</if>
+		<else />
+			<if condition="$edit_discussion">
+				$vbphrase[post_new_discussion]
+			<else />
+				$vbphrase[reply_to_discussion]
+			</if>
+		</if>
+	</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]" style="max-width:$stylevar[formwidth]; width:auto !important; width:$stylevar[formwidth_usercp]">
+
+		$usernamecode
+
+		$human_verify
+
+		<if condition="$edit_discussion">
+			<div class="smallfont">$vbphrase[subject]:</div>
+			<input type="text" class="bginput" name="subject" value="$message[title]" size="50" maxlength="$vboptions[titlemaxchars]" tabindex="1" title="$vbphrase[subject]" />
+		</if>
+		<!-- message area -->
+		<div class="smallfont">$vbphrase[message]: <if condition="$show['auto_moderation']"><span class="shade">$vbphrase[this_post_will_be_automatically_moderated]</span></if></div>
+		$messagearea
+		<!-- / message area -->
+
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="hidden" name="s" value="$session[sessionhash]" />
+		<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+		<input type="hidden" name="do" value="message" />
+		<input type="hidden" name="gmid" value="$messageinfo[gmid]" />
+		<input type="hidden" name="posthash" value="$posthash" />
+		<input type="hidden" name="loggedinuser" value="$bbuserinfo[userid]" />
+		<input type="hidden" name="groupid" value="$group[groupid]" />
+		<input type="hidden" name="discussionid" value="$discussion[discussionid]" />
+					<input type="submit" class="button" name="sbutton" id="{$editorid}_save" value="$vbphrase[post_message]" accesskey="s" tabindex="1" />
+		<input type="submit" class="button" name="preview" value="$vbphrase[preview]" accesskey="r" tabindex="1" />
+	</div>
+	</td>
+</tr>
+</table>
+
+<if condition="$show['additional_options']">
+<br />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<thead>
+	<tr>
+		<td class="tcat">
+			<a style="float:$stylevar[right]" href="#top" onclick="return toggle_collapse('newpost_options')"><img id="collapseimg_newpost_options" src="$stylevar[imgdir_button]/collapse_tcat$vbcollapse[collapseimg_newpost_options].gif" alt="" border="0" /></a>
+			$vbphrase[additional_options]
+		</td>
+	</tr>
+</thead>
+<tbody id="collapseobj_newpost_options" style="$vbcollapse[collapseobj_newpost_options]">
+	<tr valign="top">
+		<td class="panelsurround" align="center">
+		<div class="panel">
+			<div align="$stylevar[left]" style="max-width:$stylevar[formwidth]; width:auto !important; width:$stylevar[formwidth_usercp]">
+
+				<if condition="$show['misc_options']">
+				<fieldset class="fieldset">
+					<legend>$vbphrase[miscellaneous_options]</legend>
+					<div style="padding:$stylevar[formspacer]px">
+						<if condition="$show['parseurl']"><div><label for="cb_parseurl"><input type="checkbox" name="parseurl" value="1" id="cb_parseurl" tabindex="1" $checked[parseurl] />$vbphrase[automatically_parse_links_in_text]</label></div></if>
+						$disablesmiliesoption
+					</div>
+				</fieldset>
+				</if>
+			</div>
+		</div>
+
+		<div style="margin-top:$stylevar[cellpadding]px">
+						<input type="submit" class="button" name="sbutton" value="$vbphrase[post_message]" accesskey="s" tabindex="1" />
+			<input type="submit" class="button" name="preview" value="$vbphrase[preview]" accesskey="r" tabindex="1" />
+		</div>
+		</td>
+	</tr>
+</tbody>
+</table>
+</if>
+
+</form>
+
+<if condition="$messagebits">
+<br />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+<thead>
+	<tr>
+		<td class="tcat">
+			<a style="float:$stylevar[right]" href="#top" onclick="return toggle_collapse('newmessage_dialog')"><img id="collapseimg_newmessage_dialog" src="$stylevar[imgdir_button]/collapse_tcat$vbcollapse[collapseimg_newmessage_dialog].gif" alt="" border="0" /></a>
+					$vbphrase[message_dialog]
+		</td>
+	</tr>
+</thead>
+<tbody id="collapseobj_newmessage_dialog" style="$vbcollapse[collapseobj_newmessage_dialog]">
+	<tr valign="top">
+		<td class="panelsurround">
+		<div class="panel">
+
+			$messagebits
+
+		</div>
+		</td>
+	</tr>
+</tbody>
+</table>
+</if>
+
+<br />
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_form" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="!$icononly">
+<form action="group.php?do=$action" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="$action" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="url" value="$url" />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		$phrase
+		<if condition="$_REQUEST['do'] == 'edit'">
+			<span class="normal"><a href="group.php?$session[sessionurl]groupid=$group[groupid]">$group[name]</a></span>
+		</if>
+	</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+		<div class="panel">
+			<table><tr><td align="$stylevar[left]">
+
+				<div class="smallfont">
+					<label for="socialgroupcategoryid">$vbphrase[social_group_category]:</label><br />
+					<select name="socialgroupcategoryid" id="socialgroupcategoryid">
+						<option value="">$vbphrase[select_a_category]</option>
+						$categoryoptions
+					</select>
+				</div>
+
+				<if condition="$show['title']">
+					<div class="smallfont">
+					<label for="groupname">$vbphrase[group_name]:</label><br />
+						<input type="text" class="bginput" name="groupname" id="groupname" size="50" maxlength="$vboptions[sg_name_maxchars]" value="$group[rawname]" tabindex="1" />
+					</div>
+				</if>
+
+				<div class="smallfont" style="margin-top:$stylevar[formspacer]px">
+					<label for="groupdescription">$vbphrase[group_description]: <span class="shade">($vbphrase[bbcode_not_allowed])</span></label><br />
+					<textarea class="bginput" name="groupdescription" id="groupdescription" cols="50" rows="5" tabindex="1">$group[rawdescription]</textarea>
+				</div>
+
+				<div class="smallfont" style="margin-top:$stylevar[formspacer]px">
+					<label for="grouptype">$vbphrase[group_type]:</label><br />
+					<select name="grouptype" id="grouptype">
+						<option value="public"$typeselected[public]>$vbphrase[group_type_public]</option>
+						<option value="moderated"$typeselected[moderated]>$vbphrase[group_type_moderated]</option>
+						<option value="inviteonly"$typeselected[inviteonly]>$vbphrase[group_type_inviteonly]</option>
+					</select>
+				</div>
+
+				<if condition="$show['options']">
+					<fieldset class="fieldset" style="margin-top:$stylevar[formspacer]px">
+						<legend>$vbphrase[group_options]</legend>
+						<div class="smallfont">
+							<if condition="$show['enable_group_albums']">
+								<div>
+									<label for="enable_group_albums"><input type="checkbox" name="options[enable_group_albums]" id="enable_group_albums" value="1" $checked[enable_group_albums]/> $vbphrase[enable_albums]</label>
+								</div>
+							</if>
+							<if condition="$show['enable_group_messages']">
+								<div>
+									<label for="enable_group_messages"><input type="checkbox" name="options[enable_group_messages]" id="enable_group_messages" value="1" $checked[enable_group_messages]/> $vbphrase[enable_messages]</label>
+								</div>
+							</if>
+							<if condition="$show['mod_queue']">
+							<div>
+								<label for="group_owner_mod_queue"><input type="checkbox" name="options[owner_mod_queue]" id="group_owner_mod_queue" value="1" $checked[mod_queue]/> $vbphrase[messages_must_be_approved_by_owner]</label>
+								</div>
+							</if>
+							<if condition="$show['join_to_view']">
+							<div>
+								<label for="join_to_view"><input type="checkbox" name="options[join_to_view]" id="join_to_view" value="1" $checked[join_to_view]/> $vbphrase[users_must_join_to_view_content]</label>
+								</div>
+							</if>
+							<if condition="$show['only_owner_discussions']">
+								<div>
+									<label for="only_owner_discussions"><input type="checkbox" name="options[only_owner_discussions]" id="only_owner_discussions" value="1" $checked[only_owner_discussions]/> $vbphrase[only_owner_can_create_new_discussions]</label>
+						</div>
+							<else />
+								<input type="hidden" name="options[only_owner_discussions]" id="only_owner_discussions" value="$checked[only_owner_discussions]" />
+							</if>
+						</div>
+					</fieldset>
+				</if>
+			</td></tr></table>
+		</div>
+
+		<div style="margin-top:$stylevar[cellpadding]px">
+			<input type="submit" value="$vbphrase[save]" class="button" accesskey="s" tabindex="1" />
+			<input type="reset" value="$vbphrase[reset]" class="button" />
+		</div>
+	</td>
+</tr>
+</table>
+
+</form>
+</if>
+
+<if condition="$show[editicon]">
+<if condition="!$icononly"><br /></if>
+
+
+<form enctype="multipart/form-data" action="group.php?do=updateicon" method="post">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="do" value="updateicon" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="icononly" value="$icononly" />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat" colspan="2"><if condition="$icononly">$vbphrase[create_group_icon]<else />$vbphrase[edit_group_icon]</if></td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div style="width:$stylevar[formwidth_usercp]" align="$stylevar[left]">
+
+			<fieldset class="fieldset">
+				<legend>$vbphrase[current_group_icon]</legend>
+				<table cellpadding="0" cellspacing="$stylevar[formspacer]" border="0">
+				<tr valign="top">
+					<if condition="!$groupiconurl">
+					<td class="alt1" style="border:1px inset; padding:$stylevar[cellpadding]px">
+					<span class="smallfont">$vbphrase[no_group_icon]</span>
+					</td>
+					<else />
+						<td class="smallfont">
+						<img src="$groupiconurl" alt="$vbphrase[current_group_icon]"  border="0" style="margin-$stylevar[right]:8px;border:1px solid gray" />
+						</td>
+					</if>
+					<td class="smallfont">
+						<div style="margin-bottom:$stylevar[formspacer]px">$vbphrase[group_icon_desc]</div>
+						<if condition="$show['deleteicon']"><div style="margin-bottom:$stylevar[formspacer]px"><label for="groupicon"><input type="checkbox" name="deletegroupicon" value="1" id="groupicon" />$vbphrase[delete_current_image]</label></div></if>
+					</td>
+				</tr>
+				</table>
+			</fieldset>
+
+
+			<fieldset class="fieldset">
+				<legend>$vbphrase[custom_group_icon]</legend>
+
+				<div style="padding:$stylevar[formspacer]px">
+				<div class="fieldset">
+
+				$vbphrase[may_upload_custom_image_controls]<br /><br />
+
+				<if condition="$show['url_option']">
+				$vbphrase[enter_url_to_image]
+				<div style="padding:$stylevar[formspacer]px">
+					<input type="text" class="bginput" name="iconurl" value="http://www." size="45" dir="ltr" />
+				</div>
+				</if>
+
+				<if condition="$show['url_option']">$vbphrase[option_2_upload_image_from_computer]<else />$vbphrase[upload_image_from_computer]</if>
+				<div style="padding:$stylevar[formspacer]px">
+					<input type="file" class="bginput" name="upload" size="45" />
+					<input type="hidden" name="MAX_FILE_SIZE" value="$inimaxattach" />
+				</div>
+
+				$maxnote
+
+				</div>
+				</div>
+			</fieldset>
+
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[save_changes]" accesskey="s" />
+		<input type="reset" class="button" value="$vbphrase[reset_fields]" accesskey="r" />
+		<input type="submit" class="button" value="$vbphrase[skip]" name="skip" accesskey="p" />
+	</div>
+	</td>
+</tr>
+</table>
+
+</form>
+</if>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_group" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<div class="tborder content_block" id="social_group">
+	<div class="titlebg">
+		<if condition="$groupoptions['join'] OR $groupoptions['leave']">
+		<span class="smallfont" style="float:$stylevar[right]">
+			<if condition="$groupoptions['join']">
+					<a href="group.php?$session[sessionurl]do=join&amp;groupid=$group[groupid]">$vbphrase[join_group]</a>
+			<else />
+				<if condition="!$group['membertype'] AND $group['type'] == 'inviteonly'">
+						$vbphrase[group_type_inviteonly]
+				</if>
+			</if>
+			<if condition="$groupoptions['join'] AND $groupoptions['leave']">
+				&nbsp;|&nbsp;
+			</if>
+			<if condition="$groupoptions['leave']"><a href="group.php?$session[sessionurl]do=leave&amp;groupid=$group[groupid]">$leavephrase</a></if>
+		</span>
+		</if>
+		<a href="group.php">$vbphrase[social_group]</a>
+	</div>
+
+
+	<!-- group info -->
+	<div class="windowbg2">
+<strong>$group[name]</strong> created by $group[creatorusername]
+	</div>
+<if condition="$group['description']">
+<div class="windowbg">
+$group[description]
+</div>
+</if>
+
+
+	<!-- messages -->
+<if condition="$show['groupmessages']">
+<div class="windowbg2">$vbphrase[social_group_messages]
+</if>
+
+
+	<if condition="$messagebits">
+		<div class="windowbg" id="group_message_header">
+			<if condition="$messagetotal"><phrase 1="$messagestart" 2="$messageend" 3="$messagetotal">$vbphrase[showing_gms_x_to_y_of_z]</phrase><else />&nbsp;</if>
+		</div>
+			<ol class="windowbg2" id="message_list">
+				$messagebits
+			</ol>
+</div>
+	
+
+	<else /><if condition="$show['quickcomment']">
+		<div class="alt2 block_row">$vbphrase[group_has_no_messages]</div>
+	</if></if>
+<if condition="$show['groupmessages']">
+<form action="group.php?$session[sessionurl]do=message" method="post" name="vbform" id="message_form">
+<div>
+<textarea name="message" rows="10" cols="30" style="height:100px;width:100%" tabindex="1">
+</textarea><br />
+<input type="hidden" name="fromquickcomment" value="1" />
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="do" value="message" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="loggedinuser" value="$bbuserinfo[userid]" />
+<input type="hidden" name="parseurl" value="1" />
+<input type="hidden" name="lastcomment" value="$lastcomment" />
+<input type="hidden" name="allow_ajax_qc" value="$show[allow_ajax_qc]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="submit" id="qr_submit" value="$vbphrase[post_message]" name="sbutton" class="button" accesskey="s" onclick="clickedelm = this.value" />
+<!--<input type="submit" id="qr_preview" value="$vbphrase[go_advanced]" name="preview" class="button" accesskey="x" onclick="clickedelm = this.value" />-->
+</div>
+</form>
+</if>
+<if condition="!$group['canviewcontent']">
+	<div class="alt2 block_row">$vbphrase[must_join_to_view]</div>
+</if>
+</div>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_manage" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	$memberinfo_css
+	$socialgroups_css
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_namesugg.js?v=$vboptions[simpleversion]"></script>
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_userlist.js?v=$vboptions[simpleversion]"></script>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<span style="float:$stylevar[right]" class="smallfont"><b>$vbphrase[social_group]</b>: <a href="group.php?$session[sessionurl]groupid=$group[groupid]">$group[name]</a></span>
+		<if condition="$show['manage_members']">
+			$vbphrase[manage_members]
+		<else />
+			$vbphrase[pending_and_invited_members]
+		</if>
+	</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+		<div class="panel">
+			<div align="center">
+				<if condition="$moderatebits">
+					<fieldset class="fieldset" id="moderatedlist_container" style="width: $stylevar[formwidth]; text-align: $stylevar[left];">
+						<legend>$vbphrase[members_pending_moderation]</legend>
+
+						<form action="group.php?$session[sessionurl]do=pendingmembers&amp;groupid=$group[groupid]" method="post" id="moderatedlist_change_form">
+							<input type="hidden" name="do" value="pendingmembers" />
+							<input type="hidden" name="s" value="$session[sessionhash]" />
+							<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+							<input type="hidden" name="groupid" value="$group[groupid]" />
+
+							<div class="checkbox_ctrls floatcontainer">
+								<label class="check_all_ctrl shade"><input type="checkbox" id="moderatedlist_checkall" />$vbphrase[check_uncheck_all]</label>
+							</div>
+							<div class="userlist_title">$vbphrase[members_pending_moderation]</div>
+							<div class="userlist_description">$vbphrase[members_pending_moderation_description]:</div>
+							<ul class="userlist userlist_hiddenavatars floatcontainer" id="moderatedlist">
+								$moderatebits
+							</ul>
+							<div class="submitrow smallfont" style="margin-top: $stylevar[cellpadding]px;">
+								<div id="moderatedlist_action">
+									<div><label for="action_accept"><input type="radio" name="action" value="accept" id="action_accept" checked="checked" />$vbphrase[accept]</label></div>
+									<div><label for="action_deny"><input type="radio" name="action" value="deny" id="action_deny" />$vbphrase[deny]</label></div>
+								</div>
+								<input type="submit" class="button" id="moderated_submit" value="$vbphrase[save_changes]" />
+							</div>
+						</form>
+
+						<script type="text/javascript">
+						<!--
+						vBulletin.register_control("vB_UserList_Highlighter", "moderatedlist");
+						//-->
+						</script>
+					</fieldset>
+				</if>
+
+
+
+				<fieldset class="fieldset" id="invitedlist_container" style="width: $stylevar[formwidth]; text-align: $stylevar[left];">
+					<legend>$vbphrase[invited_users]</legend>
+					<if condition="$invitebits">
+						<form action="group.php?$session[sessionurl]do=pendingmembers&amp;groupid=$group[groupid]" method="post" id="invitedlist_change_form">
+							<input type="hidden" name="do" value="cancelinvites" />
+							<input type="hidden" name="s" value="$session[sessionhash]" />
+							<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+							<input type="hidden" name="groupid" value="$group[groupid]" />
+
+							<div class="checkbox_ctrls floatcontainer">
+								<label class="check_all_ctrl shade"><input type="checkbox" id="invitedlist_checkall" />$vbphrase[check_uncheck_all]</label>
+							</div>
+							<div class="userlist_title">$vbphrase[invited_members]</div>
+							<div class="userlist_description">$vbphrase[invited_users_description]:</div>
+							<ul class="userlist userlist_hiddenavatars floatcontainer" id="invitedlist">
+								$invitebits
+							</ul>
+							<div class="submitrow smallfont" style="margin-top: $stylevar[cellpadding]px;">
+								<input type="submit" class="button" id="moderated_submit" value="$vbphrase[cancel_invitation]" />
+							</div>
+						</form>
+
+						<script type="text/javascript">
+						<!--
+						vBulletin.register_control("vB_UserList_Highlighter", "invitedlist");
+						//-->
+						</script>
+						<hr />
+					</if>
+
+					<form action="group.php?do=sendinvite&amp;groupid=$group[groupid]" method="post">
+						<input type="hidden" name="s" value="$session[sessionhash]" />
+						<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+						<input type="hidden" name="do" value="sendinvite" />
+						<input type="hidden" name="groupid" value="$group[groupid]" />
+
+						<if condition="$errormsg">
+							<div><img src="$stylevar[imgdir_statusicon]/wol_error.gif" class="inlineimg" alt="" /> $errormsg</div>
+						</if>
+
+						$vbphrase[invite_user]
+						<div>
+							<span id="group_invite"><input type="text" class="bginput" name="username" id="group_invite_txt" size="40" value="$invite_username" /></span>
+							<input type="submit" class="button" value="$vbphrase[invite]" />
+						</div>
+						<div id="group_invite_menu" class="vbmenu_popup" style="display:none"></div>
+					</form>
+					<script type="text/javascript">
+						vBmenu.register("group_invite", true);
+						snc_invite = new vB_AJAX_NameSuggest("snc_invite", "group_invite_txt", "group_invite");
+					</script>
+				</fieldset>
+
+			</div>
+		</div>
+	</td>
+</tr>
+</table>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_managemembers" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	$memberinfo_css
+	$socialgroups_css
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_namesugg.js?v=$vboptions[simpleversion]"></script>
+
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_userlist.js?v=$vboptions[simpleversion]"></script>
+</head>
+<body>
+<div class="bodywrapping">
+	$header
+	$navbar
+
+	<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+	<tr>
+		<td class="tcat"><span style="float:$stylevar[right]" class="smallfont"><a href="group.php?$session[sessionurl]groupid=$group[groupid]">$group[name]</a></span>$vbphrase[manage_members]</td>
+	</tr>
+	<tr>
+		<td class="panelsurround" align="center">
+			<div class="panel">
+				<div align="center">
+					<fieldset class="fieldset" id="memberlist_container" style="width: $stylevar[formwidth]; text-align: $stylevar[left];">
+						<legend>$vbphrase[manage_members]</legend>
+						<if condition="$memberbits">
+							<form action="group.php?$session[sessionurl]do=pendingmembers&amp;groupid=$group[groupid]" method="post" id="memberlist_change_form">
+								<input type="hidden" name="do" value="kickmembers" />
+								<input type="hidden" name="s" value="$session[sessionhash]" />
+								<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+								<input type="hidden" name="groupid" value="$group[groupid]" />
+
+								<div class="checkbox_ctrls floatcontainer">
+									<label class="check_all_ctrl shade"><input type="checkbox" id="memberlist_checkall" />$vbphrase[check_uncheck_all]</label>
+								</div>
+								<div class="userlist_title">$vbphrase[kick_members]</div>
+								<div class="userlist_description">$vbphrase[kick_members_description]:</div>
+								<ul class="userlist userlist_hiddenavatars floatcontainer" id="memberlist">
+									$memberbits
+								</ul>
+								<div class="submitrow smallfont" style="margin-top: $stylevar[cellpadding]px;">
+									<input type="submit" class="button" id="moderated_submit" value="$vbphrase[kick_members]" />
+								</div>
+							</form>
+
+							<script type="text/javascript">
+							<!--
+							vBulletin.register_control("vB_UserList_Highlighter", "memberlist");
+							//-->
+							</script>
+						<else />
+							$vbphrase[last_member_of_group]
+						</if>
+
+					</fieldset>
+				</div>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+	<script type="text/javascript">
+		<!--
+
+		//    snc_buddylist = new vB_AJAX_NameSuggest("snc_buddylist", "buddylist_add_txt", "buddylist_add");
+
+		// ajax saver
+		//    vBulletin.register_control("vB_UserList_Saver", "buddylist");
+		//    vBulletin.register_control("vB_UserList_Saver", "incomingreqs");
+		// img-label handler
+// 		vBulletin.register_control("vB_UserList_Highlighter", "invitedlist");
+
+// 		console.log("foo");
+		//vBulletin.register_control("vB_UserList_Highlighter", "incomingreqs");
+		//-->
+	</script>
+$footer
+</div>
+</body>
+</html>
+
+
+
+<!-- Still to edit -->
+
+
+]]></template>
+		<template name="socialgroups_memberlist" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	$memberinfo_css
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+<tr>
+	<td colspan="2" class="tcat">
+		<phrase 1="$group[name]">$vbphrase[members_in_group_x]</phrase>
+	</td>
+</tr>
+<tr>
+	<td class="alt1">
+		<ul class="list_no_decoration">$member_list</ul>
+	</td>
+</tr>
+</table>
+<if condition="$pagenav">
+	<div style="margin-top: $stylevar[cellpadding]px">$pagenav</div>
+</if>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_message" templatetype="template" date="1305263010" username="dartho" version="3.8.7"><![CDATA[<li>
+		<div>
+			<div>			<if condition="$message['postuserid']">
+				<a href="member.php?$session[sessionurl]u=$message[postuserid]" class="smallfont username">$message[musername]</a>
+			<else />
+				<span class="smallfont username">$message[musername]</span>
+			</if>
+$message[date]<if condition="!$show['detailedtime']"> <span>$message[time]</span></if></div>
+			<if condition="$show['group']">
+				<div><phrase 1="group.php?$session[sessionurl]gmid=$message[gmid]#gmessage$message[gmid]" 2="$message[name_html]">$vbphrase[group_x]</phrase></div>
+			</if>
+		</div>
+
+	<div class="windowbg">$message[message]</div>
+</li>]]></template>
+		<template name="socialgroups_overview" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $custompagetitle</title>
+$socialgroups_css
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$template_hook[group_overview_start]
+
+<div class="floatcontainer">
+	<div class="floatwrapper">
+
+		$template_hook[group_overview_before_categories]
+
+		<if condition="$categorybits">
+		<div id="sg_catcloud">
+			<form action="group.php?$session[sessionurl]do=grouplist" method="post">
+				<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" align="center" width="100%">
+				<tr>
+					<td class="tcat">
+						<div style="float:$stylevar[right]" class="normal">$vbphrase[search_groups] <input type="text" class="bginput" name="filtertext" value="$filters[text]" style="font-size: 11px;" />&nbsp;<input type="submit" class="button" value="$vbphrase[go]" /></div>
+						$vbphrase[categories]
+					</td>
+				</tr>
+				<tr>
+					<td class="alt1">
+						$categorybits
+					</td>
+				</tr>
+				<tr>
+					<td align="$stylevar[right]" class="tfoot smallfont">
+						<strong><a href="group.php?$session[sessionurl]do=categorylist">$vbphrase[view_all_categories]</a></strong>
+					</td>
+				</tr>
+				</table>
+
+				<input type="hidden" name="s" value="$session[sessionhash]" />
+				<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+				<input type="hidden" name="dofilter" value="1" />
+			</form>
+		</div>
+		</if>
+
+		$template_hook[group_overview_after_categories]
+
+		<if condition="$randomgroup">
+		<div id="sg_randomgroup">
+			<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" align="center" width="100%">
+			<tr>
+				<td class="tcat">
+					$vbphrase[random_group]
+				</td>
+			</tr>
+			<tr>
+				<td class="alt1">
+					<span style="float:$stylevar[right]" class="smallfont"><phrase 1='<a href="group.php?$session[sessionurl]do=grouplist&amp;cat=$randomgroup[categoryid]" style="font-weight:normal">$randomgroup[categoryname]</a>'>$vbphrase[in_category_x]</phrase></span>
+					<a href="group.php?$session[sessionurl]groupid=$randomgroup[groupid]" <if condition="!$randomgroup[is_read]">class="unread"</if>>$randomgroup[name]</a><br />
+				</td>
+			</tr>
+			<tr>
+				<td class="alt1">
+					<if condition="$show['sgicons']"><div class="sgicon"><a href="group.php?$session[sessionurl]groupid=$randomgroup[groupid]"><img class="sgicon" src="$randomgroup[iconurl]" alt="$randomgroup[shortdescription]" /></a></div></if>
+					<span style="display:block">$randomgroup[mediumdescription]</span>
+					<div id="sg_randomgroup_info">
+						<table cellspacing="0" cellpadding="0" border="0">
+						<tr>
+							<td nowrap="nowrap" align="$stylevar[left]" valign="top">
+								<div><a href="group.php?$session[sessionid]groupid=$randomgroup[groupid]">$vbphrase[group_members]:</a> <strong>$randomgroup[members]</strong></div>
+							<if condition="$show['pictureinfo']">
+								<div><a href="group.php?$session[sessionid]do=grouppictures&amp;groupid=$randomgroup[groupid]">$vbphrase[pictures]:</a> <strong>$randomgroup[picturecount]</strong></div>
+							</if>
+							</td>
+							<if condition="$show['messageinfo']">
+							<td nowrap="nowrap" align="$stylevar[left]" valign="top">
+								<div><a href="group.php?$session[sessionurl]groupid=$randomgroup[groupid]">$vbphrase[discussions]:</a> <strong>$randomgroup[discussions]</strong></div>
+								<div><a href="group.php?$session[sessionid]groupid=$randomgroup[groupid]">$vbphrase[messages]:</a> <strong>$randomgroup[visible]</strong></div>
+							</td>
+							</if>
+						</tr>
+						</table>
+					</div>
+					$template_hook[group_random_group_info]
+				</td>
+			</tr>
+			<tr>
+				<td class="tfoot smallfont">
+					<span style="float:$stylevar[right]"><strong><a href="group.php?$session[sessionurl]do=grouplist">$vbphrase[view_all_groups]</a></strong></span>
+				</td>
+			</tr>
+			</table>
+		</div>
+		</if>
+
+		$template_hook[group_overview_after_random_group]
+
+		<if condition="$owngroup">
+		<div id="sg_owngroups">
+			$owngroup
+		</div>
+		</if>
+
+		$template_hook[group_overview_after_own_groups]
+
+
+		<div id="sg_mygroups">
+			<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" style="margin-bottom:20px">
+			<tr>
+				<td class="tcat" colspan="3">$vbphrase[your_groups]</td>
+			</tr>
+
+			<if condition="$show['sgicons']">
+
+			<tr>
+				<if condition="$mygroup_bits">
+				<td class="alt1">
+					$mygroup_bits
+				</td>
+				<else />
+				<td class="alt1" style="text-align:center">
+					$vbphrase[you_are_not_a_member_of_any_groups]
+				</td>
+				</if>
+			</tr>
+
+			<else />
+
+			<tr>
+				<td class="thead" width="100%">$vbphrase[group_name]</td>
+				<td class="thead" align="center" nowrap="nowrap">$vbphrase[joined_group]</td>
+				<td class="thead" align="center" nowrap="nowrap">$vbphrase[options]</td>
+			</tr>
+
+			$mygroup_bits
+
+			</if>
+
+			</table>
+		</div>
+
+	</div>
+
+	$template_hook[group_overview_after_your_groups]
+
+	<div id="sg_newgroups">
+		<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+		<tr>
+			<td class="tcat" colspan="3">
+				$vbphrase[new_groups]
+			</td>
+		</tr>
+
+		<if condition="$show['sgicons']">
+
+		<tr>
+			<if condition="$newgroupbits">
+			<td class="alt1">
+				$newgroupbits
+			</td>
+			<else />
+			<td class="alt1" align="center">
+				$vbphrase[no_social_groups]<br />
+				<if condition="$show['creategroup']">
+					<a href="group.php?$session[sessionurl]do=create" rel="nofollow">$vbphrase[create_a_new_group]</a>
+				</if>
+			</td>
+			</if>
+		</tr>
+
+		<else />
+
+		<tr>
+			<td class="thead" width="100%">$vbphrase[group_name]</td>
+			<td class="thead" align="center" nowrap="nowrap">$vbphrase[category]</td>
+		</tr>
+
+		$newgroupbits
+
+		</if>
+
+		<if condition="$newgroupbits">
+		<tr>
+			<td class="tfoot smallfont" colspan="3">
+				<span style="float:$stylevar[right]"><strong><a href="group.php?$session[sessionurl]do=grouplist">$vbphrase[view_all_groups]</a></strong></span>
+			</td>
+		</tr>
+		</if>
+		</table>
+	</div>
+
+	$template_hook[group_overview_after_new_groups]
+
+	<if condition="$show['creategroup']">
+	<div class="action_links">
+		<strong><a href="group.php?$session[sessionurl]do=create" rel="nofollow">$vbphrase[create_a_new_group]</a></strong>
+	</div>
+	</if>
+
+	<div class="action_links">
+		<strong><a href="group.php?$session[sessionurl]do=search">$vbphrase[advanced_search]</a></strong>
+	</div>
+
+	<div class="action_links">
+		<strong><a href="groupsubscription.php$session[sessionurl_q]">$vbphrase[group_subscriptions]</a></strong>
+	</div>
+
+	$template_hook[group_overview_after_action_links]
+</div>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_picture" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	$picturecomment_css
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+<script type="text/javascript" src="clientscript/vbulletin_quick_edit_generic.js?v=$vboptions[simpleversion]"></script>
+<script type="text/javascript" src="clientscript/vbulletin_quick_edit_picturecomment.js?v=$vboptions[simpleversion]"></script>
+
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<if condition="$show['picture_nav']">
+			<div class="smallfont" style="float: $stylevar[right]">
+				<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[prev_pictureid]">$pic_location[prev_text_short]</a> |
+				<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[next_pictureid]">$pic_location[next_text_short]</a>
+			</div>
+		</if>
+
+		<phrase 1="$pic_location[pic_position]" 2="$group[picturecount]" 3="$group[name]">$vbphrase[picture_x_of_y_from_group_z]</phrase>
+	</td>
+</tr>
+<tr>
+	<td class="alt1" align="center">
+		<table width="<if condition="$pictureinfo['width'] < 450">450<else />$pictureinfo[width]</if>" cellpadding="$stylevar[cellpadding]">
+		<tr>
+			<td align="center"><img src="picture.php?$session[sessionurl]groupid=$group[groupid]&amp;pictureid=$pictureinfo[pictureid]" alt="$vbphrase[picture]" /></td>
+		</tr>
+		<if condition="$pictureinfo['caption_html']">
+			<tr>
+				<td align="$stylevar[left]"><em>$pictureinfo[caption_html]</em></td>
+			</tr>
+		</if>
+		<tr>
+			<td align="$stylevar[left]" class="smallfont" nowrap="nowrap">
+				<if condition="$show['edit_picture_option'] OR $show['reportlink']">
+					<div class="smallfont normal" style="float: $stylevar[right]">
+					<if condition="$show['edit_picture_option']">
+						<div><a href="album.php?$session[sessionurl]do=editpictures&amp;albumid=$album[albumid]&amp;pictureid=$pictureinfo[pictureid]&amp;frompicture=1">$vbphrase[edit_picture]</a></div>
+					</if>
+					<if condition="$show['remove_picture_option']">
+						<div><a href="group.php?$session[sessionurl]do=removepicture&amp;groupid=$group[groupid]&amp;pictureid=$pictureinfo[pictureid]">$vbphrase[remove_from_group]</a></div>
+					</if>
+					<if condition="$show['reportlink']">
+						<div><a href="group.php?$session[sessionurl]do=reportpicture&amp;groupid=$group[groupid]&amp;pictureid=$pictureinfo[pictureid]">$vbphrase[report_picture]</a></div>
+					</if>
+					</div>
+				</if>
+				<div><span class="shade">$vbphrase[picture_added]:</span> $pictureinfo[adddate] <if condition="!$show['detailedtime']"><span class="time">$pictureinfo[addtime]</span></if></div>
+				<div><span class="shade">$vbphrase[picture_by]:</span> <a href="member.php?$session[sessionurl]u=$pictureinfo[userid]">$pictureinfo[username]</a></div>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+
+<if condition="$show['picture_nav']">
+	<div class="smallfont" align="center" style="margin-top: $stylevar[cellpadding]px">
+		<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[prev_pictureid]">$pic_location[prev_text]</a> |
+		<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[next_pictureid]">$pic_location[next_text]</a>
+	</div>
+</if>
+
+$picturecomment_commentarea
+
+<if condition="$show['picturecomment_options'] AND $show['picture_nav']">
+	<div class="smallfont" align="center" style="margin-top: $stylevar[cellpadding]px">
+		<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[prev_pictureid]">$pic_location[prev_text]</a> |
+		<a href="group.php?$session[sessionurl]do=picture&amp;groupid=$group[groupid]&amp;pictureid=$pic_location[next_pictureid]">$pic_location[next_text]</a>
+	</div>
+</if>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_pictures" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$pagenav"><div style="margin-bottom:3px">$pagenav</div></if>
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		<if condition="$show['add_pictures_link']"><a class="smallfont" style="float: $stylevar[right]" href="group.php?$session[sessionurl]do=addpictures&amp;groupid=$group[groupid]">$vbphrase[add_pictures]</a></if>
+		<phrase 1="$group[name]">$vbphrase[pictures_from_group_x]</phrase>
+	</td>
+</tr>
+<tr>
+	<td class="alt1 floatcontainer" id="picturebits">
+		<if condition="$picturebits">
+			$picturebits
+		<else />
+			$vbphrase[no_pictures_added_group_yet]
+			<if condition="$show['add_pictures_link']"><a href="group.php?$session[sessionurl]do=addpictures&amp;groupid=$group[groupid]">$vbphrase[add_pictures_to_this_group]</a></if>
+		</if>
+	</td>
+</tr>
+</table>
+
+<if condition="$pagenav"><div style="margin-top:3px">$pagenav</div></if>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_search" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$show['errors']">
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr align="$stylevar[left]">
+	<td class="tcat">
+	<if condition="!$grouplisttitle">$vbphrase[errors_occured_with_search]
+	<else />$grouplisttitle</if>
+	</td>
+</tr>
+<tr>
+	<td class="alt1">
+		<if condition="$show['noresults']">
+			<ol style="list-style-type:none">$errorlist</ol>
+		<else />
+			<ol>$errorlist</ol>
+		</if>
+	</td>
+</tr>
+</table>
+<br /><br />
+</if>
+
+<form action="group.php?$session[sessionurl]do=grouplist" method="post">
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" align="center" width="100%">
+<tr>
+	<td class="tcat">$vbphrase[advanced_search]</td>
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+		<div class="panel">
+		<table style="width:$stylevar[formwidth]" align="center" border="0" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]">
+		<tr valign="top">
+			<td width="50%" align="$stylevar[left]">
+				<fieldset class="fieldset">
+					<legend>$vbphrase[search_by_key_word]</legend>
+					<div style="padding:$stylevar[formspacer]px">
+						<div><label for="filter_keywords">$vbphrase[key_words]:</label></div>
+						<div><input type="text" class="bginput" name="filtertext" id="filter_keywords" size="35" value="$filters[text]" style="width:250px" /></div>
+					</div>
+				</fieldset>
+				<fieldset class="fieldset">
+					<legend>$vbphrase[find_groups_with]</legend>
+					<table cellspacing="0" cellpadding="$stylevar[formspacer]" border="0">
+					<tr>
+						<td>
+							<select name="memberless" style="width:150px">
+								<option value="0" $memberlessselected[0]>$vbphrase[at_least]</option>
+								<option value="1" $memberlessselected[1]>$vbphrase[at_most]</option>
+							</select>
+						</td>
+						<td align="$stylevar[left]">
+							<label for="memberlimit"><input type="text" class="bginput" style="font-size:11px" name="memberlimit" id="memberlimit" size="3" value="$memberlimit" /> $vbphrase[members]</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<select name="discussionless" style="width:150px">
+								<option value="0" $discussionlessselected[0]>$vbphrase[at_least]</option>
+								<option value="1" $discussionlessselected[1]>$vbphrase[at_most]</option>
+							</select>
+						</td>
+						<td align="$stylevar[left]">
+							<label for="discussionlimit"><input type="text" class="bginput" style="font-size:11px" name="discussionlimit" id="discussionlimit" size="3" value="$discussionlimit" /> $vbphrase[discussions]</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<select name="messageless" style="width:150px">
+								<option value="0" $messagelessselected[0]>$vbphrase[at_least]</option>
+								<option value="1" $messagelessselected[1]>$vbphrase[at_most]</option>
+							</select>
+						</td>
+						<td align="$stylevar[left]">
+							<label for="messagelimit"><input type="text" class="bginput" style="font-size:11px" name="messagelimit" id="messagelimit" size="3" value="$messagelimit" /> $vbphrase[messages]</label>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<select name="pictureless" style="width:150px">
+								<option value="0" $picturelessselected[0]>$vbphrase[at_least]</option>
+								<option value="1" $picturelessselected[1]>$vbphrase[at_most]</option>
+							</select>
+						</td>
+						<td align="$stylevar[left]">
+							<label for="picturelimit"><input type="text" class="bginput" style="font-size:11px" name="picturelimit" id="picturelimit" size="3" value="$picturelimit" /> $vbphrase[pictures]</label>
+						</td>
+					</tr>
+					</table>
+				</fieldset>
+			</td>
+			<td width="50%" align="$stylevar[left]">
+				<fieldset class="fieldset">
+					<legend>$vbphrase[creation_date_filter]</legend>
+					<div style=" padding:$stylevar[formspacer]px">
+						<div>$vbphrase[date_is_before]</div>
+						<table cellpadding="0" cellspacing="2" border="0">
+						<tr>
+							<td class="smallfont">
+								<div><label for="filter_date_lteq_month">$vbphrase[month]</label></div>
+								<div>
+									<select name="filter_date_lteq[month]" id="filter_date_lteq_month">
+										<option value="0">---</option>
+										<option value="1">$vbphrase[january]</option>
+										<option value="2">$vbphrase[february]</option>
+										<option value="3">$vbphrase[march]</option>
+										<option value="4">$vbphrase[april]</option>
+										<option value="5">$vbphrase[may]</option>
+										<option value="6">$vbphrase[june]</option>
+										<option value="7">$vbphrase[july]</option>
+										<option value="8">$vbphrase[august]</option>
+										<option value="9">$vbphrase[september]</option>
+										<option value="10">$vbphrase[october]</option>
+										<option value="11">$vbphrase[november]</option>
+										<option value="12">$vbphrase[december]</option>
+									</select>
+								</div>
+							</td>
+							<td class="smallfont">
+								<div><label for="filter_date_lteq_day">$vbphrase[day]</label></div>
+								<div><input type="text" class="bginput" style="font-size:11px" name="filter_date_lteq[day]" id="filter_date_lteq_day" value="$filter_date_lteq[day]" size="4" maxlength="2" /></div>
+							</td>
+							<td class="smallfont">
+								<div><label for="filter_date_lteq_year">$vbphrase[year]</label></div>
+								<div><input type="text" class="bginput" style="font-size:11px" name="filter_date_lteq[year]" id="filter_date_lteq_year" value="$filter_date_lteq[year]" size="4" maxlength="4" /></div>
+							</td>
+						</tr>
+						</table>
+						<div>$vbphrase[date_is_after]</div>
+						<table cellpadding="0" cellspacing="2" border="0">
+						<tr>
+							<td class="smallfont">
+								<div>
+									<label for="filter_date_gteq_month">$vbphrase[month]</label>
+								</div>
+								<div>
+									<select name="filter_date_gteq[month]" id="filter_date_gteq_month">
+										<option value="0">---</option>
+										<option value="1">$vbphrase[january]</option>
+										<option value="2">$vbphrase[february]</option>
+										<option value="3">$vbphrase[march]</option>
+										<option value="4">$vbphrase[april]</option>
+										<option value="5">$vbphrase[may]</option>
+										<option value="6">$vbphrase[june]</option>
+										<option value="7">$vbphrase[july]</option>
+										<option value="8">$vbphrase[august]</option>
+										<option value="9">$vbphrase[september]</option>
+										<option value="10">$vbphrase[october]</option>
+										<option value="11">$vbphrase[november]</option>
+										<option value="12">$vbphrase[december]</option>
+									</select>
+								</div>
+							</td>
+							<td class="smallfont">
+								<div><label for="filter_date_gteq_day">$vbphrase[day]</label></div>
+								<div><input type="text" class="bginput" style="font-size:11px" name="filter_date_gteq[day]" id="filter_date_gteq_day" value="$filter_date_gteq[day]" size="4" maxlength="2" /></div>
+							</td>
+							<td valign="top" class="smallfont">
+								<div><label for="filter_date_gteq_year">$vbphrase[year]</label></div>
+								<div><input type="text" class="bginput" style="font-size:11px" name="filter_date_gteq[year]" id="filter_date_gteq_year" value="$filter_date_gteq[year]" size="4" maxlength="4" /></div>
+							</td>
+						</tr>
+						</table>
+					</div>
+				</fieldset>
+
+				<fieldset class="fieldset">
+					<legend>$vbphrase[category_filter]</legend>
+					<div style="padding:$stylevar[formspacer]px" class="smallfont">
+						<div><label for="cat">$vbphrase[is_in_category]</label></div>
+						<div>
+							<select name="cat" id="cat">
+								$category_options
+							</select>
+						</div>
+					</div>
+				</fieldset>
+			</td>
+		</tr>
+		</table>
+		</div>
+
+		<div style="margin-top: $stylevar[cellpadding]px;">
+			<input type="submit" class="button" value="$vbphrase[search_groups]" />
+		</div>
+	</td>
+</tr>
+</table>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="dofilter" value="1" />
+</form>
+
+$footer
+</div>
+</body>
+
+
+</html>]]></template>
+		<template name="socialgroups_subscribe" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+				
+<form action="group.php?$session[sessionurl]" method="post" name="vbform">
+<if condition="$discussion['discussionid']">
+	<input type="hidden" name="discussionid" value="$discussion[discussionid]" />
+</if>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="do" value="subscribe" />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		$vbphrase[subscribe_to_discussion]<span class="normal">: $discussion[title]</span>
+	</td>	
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]" style="width:$stylevar[formwidth]">
+			<fieldset class="fieldset">
+				<legend>$vbphrase[notification_type]</legend>
+				<div style="padding:$stylevar[formspacer]px">
+					<div class="fieldset">
+						<select name="emailupdate">
+							<option value="0" $emailselected[0]>$vbphrase[no_email_notification]</option>
+							<option value="1" $emailselected[1]>$vbphrase[instant_notification_by_email]</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[add_subscription]" accesskey="s" />
+		<input type="button" class="button" value="$vbphrase[cancel]" accesskey="c" onclick="history.back(1)" />
+	</div>
+	</td>
+</tr>
+</table>
+
+</form>
+
+<br />
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_subscribe_group" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+				
+<form action="group.php?$session[sessionurl]" method="post" name="vbform">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="groupid" value="$group[groupid]" />
+<input type="hidden" name="do" value="subscribe" />
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat">
+		$vbphrase[subscribe_to_this_group]<span class="normal">: $group[name]</span>
+	</td>	
+</tr>
+<tr>
+	<td class="panelsurround" align="center">
+	<div class="panel">
+		<div align="$stylevar[left]" style="width:$stylevar[formwidth]">
+			<fieldset class="fieldset">
+				<legend>$vbphrase[notification_type]</legend>
+				<div style="padding:$stylevar[formspacer]px">
+					<div class="fieldset">
+						<select name="emailupdate">
+							<option value="none">$vbphrase[no_email_notification]</option>
+							<option value="daily">$vbphrase[daily_email_notification]</option>
+							<option value="weekly">$vbphrase[weekly_email_notification]</option>
+						</select>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[add_subscription]" accesskey="s" />
+		<input type="button" class="button" value="$vbphrase[cancel]" accesskey="c" onclick="history.back(1)" />
+	</div>
+	</td>
+</tr>
+</table>
+
+</form>
+
+<br />
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="socialgroups_transfer" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+	$headinclude
+	<title>$vboptions[bbtitle] - $custompagetitle</title>
+	<script type="text/javascript" src="clientscript/vbulletin_ajax_namesugg.js?v=$vboptions[simpleversion]"></script>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+	<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%">
+	<tr>
+		<td class="tcat">$vbphrase[transfer_group_ownership]</td>
+	</tr>
+	<if condition="!$targetuser">
+	<tr>
+		<td class="alt1 panelsurround" align="center">
+			<div class="panel">
+				<div align="center">
+					<form action="group.php?do=dotransfer&amp;groupid=$group[groupid]" method="post">
+						<input type="hidden" name="do" value="dotransfer" />
+						<input type="hidden" name="groupid" value="$group[groupid]" />
+						<input type="hidden" name="s" value="$session[sessionhash]" />
+						<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+						<input type="hidden" name="url" value="$url" />
+
+						<fieldset class="fieldset" style="width: $stylevar[formwidth]; text-align: $stylevar[left];">
+							<legend>$vbphrase[transfer_group_ownership]</legend>
+							$vbphrase[transfer_group_ownership_info]
+							<br /><br />
+							<if condition="$error">
+								<div><img src="$stylevar[imgdir_statusicon]/wol_error.gif" class="inlineimg" alt="" /> $error</div>
+							</if>
+								$vbphrase[transfer_to_user]
+								<div>
+									<span id="group_transfer"><input type="text" class="bginput" name="targetusername" id="group_transfer_txt" size="40" value="$target_username" /></span>
+									<input type="submit" class="button" value="$vbphrase[request_transfer]" />
+								</div>
+								<div id="group_transfer_menu" class="vbmenu_popup" style="display:none"></div>
+							</form>
+							<script type="text/javascript">
+								vBmenu.register("group_transfer", true);
+								snc_transfer = new vB_AJAX_NameSuggest("snc_transfer", "group_transfer_txt", "group_transfer");
+							</script>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<else />
+	<tr>
+		<td class="alt1" align="center">
+			<phrase 1="$userinfo[userid]" 2="$userinfo[username]">$vbphrase[group_ownership_transfer_request_sent_to_x]</phrase>
+		</td>
+	</tr>
+	<tr>
+		<td class="tfoot" align="center">
+			<form action="group.php?do=canceltransfer&amp;groupid=$group[groupid]" method="post">
+				<input type="hidden" name="do" value="canceltransfer" />
+				<input type="hidden" name="groupid" value="$group[groupid]" />
+				<input type="hidden" name="s" value="$session[sessionhash]" />
+				<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+				<input type="hidden" name="url" value="$url" />
+				<input class="button" type="submit" name="confirm" value="  $vbphrase[yes]  " />
+				<input class="button" type="submit" name="deny" value="  $vbphrase[no]  " />
+			</form>
+		</td>
+	</tr>
+	</if>
+	</table>
+
+$footer
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Subscriptions (Thread Notifications)">
+		<template name="SUBSCRIBE" templatetype="template" date="1305263013" username="dartho" version="3.8.7"><![CDATA[<!-- topic table -->
+<div class="titlebg">$vbphrase[subscribed_threads]</div>
+
+<if condition="$show['pagenav']">$pagenav
+</if>
+
+<!-- topic table -->
+<if condition="$show['havethreads']">
+$threadbits
+<else />
+$vbphrase[folder_is_currently_empty]
+</if>
+<if condition="$show['pagenav']">
+$pagenav
+</if>
+<div>
+<a href="subscription.php?$session[sessionurl]do=viewsubscription&amp;daysprune=-1&amp;folderid=all">$vbphrase[view_all_subscribed_threads]</a> 
+</div>
+]]></template>
+	</templategroup>
+	<templategroup name="Tag">
+		<template name="tagbit_wrapper" templatetype="template" date="1211181192" username="dartho" version="3.8.7"><![CDATA[<if condition="$tag_list">$tag_list<else /><i>$vbphrase[none]</i></if>]]></template>
+		<template name="tag_cloud_box" templatetype="template" date="1206416856" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">
+Tag Cloud - $cloud[count] Tags
+</div>
+<div class="windowbg" style="text-align:justify">$cloud[links]</div>
+]]></template>
+		<template name="tag_cloud_headinclude" templatetype="template" date="1206417620" username="dartho" version="3.8.7"><![CDATA[<style type="text/css">
+a.tagcloudlink:link, a.tagcloudlink:visited { text-decoration:none; }
+a.tagcloudlink:hover, a.tagcloudlink:active { text-decoration:underline; }
+a.level1 { font-size: xx-small; }
+a.level2 { font-size: small; }
+a.level3 { font-size: medium; }
+a.level4 { font-size: large; }
+a.level5 { font-size: xx-large; }
+</style>]]></template>
+		<template name="tag_cloud_page" templatetype="template" date="1290151924" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+$tag_cloud_headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$tag_cloud">
+	$tag_cloud
+</if>
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+		<template name="tag_edit" templatetype="template" date="1290151924" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - $threadinfo[title] - $vbphrase[tag_management]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<div class="windowbg">Sorry, can't edit Tags from a mobile device...</div>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="tag_search" templatetype="template" date="1290151924" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$vboptions[bbtitle] - <phrase 1="$tag[tagtext]">$vbphrase[threads_tagged_with_x]</phrase></title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<if condition="$show['pagenav']">$pagenav</if>
+
+<div class="titlebg"><phrase 1="$tag[tagtext]">$vbphrase[threads_tagged_with_x]</phrase></div>
+
+$threadbits
+
+<if condition="$show['pagenav']">$pagenav</if>
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Thread Administration">
+		<template name="THREADADMIN" templatetype="template" date="1290151924" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+$HTML
+
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="threadadmin_deletethread" templatetype="template" date="1305255917" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">$vbphrase[delete_thread]</div>
+<form action="postings.php?do=dodeletethread&amp;threadid=$threadid" method="post" name="vbform">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="t" value="$threadid" />
+<input type="hidden" name="do" value="dodeletethread" />
+
+<div class="windowbg2">$vbphrase[title]: $threadinfo[title]</div>
+
+<td>$vbphrase[how_would_you_like_to_delete]</td>
+<if condition="$show['softdelete']">
+<div>
+<input type="radio" name="deletetype" value="1" id="rb_deletetype_1" checked="checked" />$vbphrase[soft_delete_leave_deleted_message]<br />
+<input type="checkbox" name="keepattachments" value="1" id="cb_keepattachments" />$vbphrase[keep_attachments]<br />
+</div>
+</if>
+
+<if condition="$show['harddelete']">
+<div>
+<input type="radio" name="deletetype" value="2" />$vbphrase[physically_remove]<br />
+</div>
+</if>
+<div style="padding:4px;">
+$vbphrase[reason_for_deletion]:<br />
+<input type="text" class="bginput" name="deletereason" value="$threadinfo[del_reason]" size="50" style="width:100%;" maxlength="125" />
+<input type="submit" class="button" value="$vbphrase[delete]" accesskey="s" />
+<input type="reset" class="button" value="$vbphrase[reset]" accesskey="r" />
+</div>
+</form>]]></template>
+		<template name="threadadmin_editthread" templatetype="template" date="1305255860" username="dartho" version="3.8.7"><![CDATA[<form action="postings.php?do=updatethread&amp;t=$threadid" method="post" name="vbform">
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="t" value="$threadid" />
+<input type="hidden" name="do" value="updatethread" />
+<div class="titlebg">Edit Thread: $threadinfo[title]</div>
+<div style="padding:4px;">$vbphrase[title]:<br />
+<input type="text" name="title" value="$threadinfo[title]" size="50" style="width:100%;" maxlength="50" tabindex="1" title="$vbphrase[optional]" />
+</div>
+<div style="padding:4px;">$vbphrase[moderator_notes] / $vbphrase[thread_summary]:<br />
+<input type="text" class="bginput" name="notes" value="$threadinfo[notes]" size="50" maxlength="250" style="width:100%;" />
+</div>
+
+<if condition="$show['undeleteoption']">
+ <div>$vbphrase[item_deleted_would_you_like_to]</div>
+ <div><input type="radio" name="threadstatus" value="0" id="rb_threadstatus_0" checked="checked" />$vbphrase[leave_it_deleted]</div>
+ <div><input type="radio" name="threadstatus" value="1" id="rb_threadstatus_1" />$vbphrase[undelete_it_restore]</div>
+ <if condition="$show['removeoption']">
+  <div><input type="radio" name="threadstatus" value="2" id="rb_threadstatus_2" />$vbphrase[physically_remove]</div>
+ </if>
+ <div>$vbphrase[reason_for_deletion]:</div>
+ <input type="text" name="reason" value="$threadinfo[del_reason]" size="50" maxlength="125" style="width:100%;" />
+ <div><input type="checkbox" name="keepattachments" value="yes" id="cb_keepattachments" checked="checked" />$vbphrase[keep_attachments]</div>
+</if>
+
+	
+<if condition="$show['options']">
+ <div><input type="checkbox" name="open" value="yes" id="cb_open" $openchecked />$vbphrase[thread_is_open]</div>
+ <div><input type="checkbox" name="sticky" value="yes" id="cb_sticky" $stickychecked />$vbphrase[thread_is_sticky]</div>
+  <if condition="$show['moderateoption']">
+   <div><input type="checkbox" name="visible" value="yes" id="cb_visible" $visiblechecked />$vbphrase[thread_is_visible]</div>
+  </if>
+</if>
+
+<div style="margin-top:$stylevar[cellpadding]px">
+ <input type="submit" class="button" value="$vbphrase[save]" accesskey="s" />
+ <input type="reset" class="button" value="$vbphrase[reset]" accesskey="r" />
+ </div>
+</form>
+]]></template>
+		<template name="threadadmin_managepost" templatetype="template" date="1212365901" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">$vbphrase[manage_post]</div>
+
+<form action="postings.php?do=domanagepost&amp;t=$threadid&amp;p=$postid" method="post" name="vbform">
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="t" value="$threadid" />
+<input type="hidden" name="do" value="domanagepost" />
+<input type="hidden" name="p" value="$postid" />
+
+<div>
+<if condition="$show['undeleteoption']">
+<div>$vbphrase[item_deleted_would_you_like_to]</div>
+<div><label for="rb_poststatus_0"><input type="radio" name="poststatus" value="0" id="rb_poststatus_0" checked="checked" />$vbphrase[leave_it_deleted]</label></div>
+<div><label for="rb_poststatus_1"><input type="radio" name="poststatus" value="1" id="rb_poststatus_1" />$vbphrase[undelete_it_restore]</label></div>
+<if condition="$show['harddelete']"><div><label for="rb_poststatus_2"><input type="radio" name="poststatus" value="2" id="rb_poststatus_2" />$vbphrase[physically_remove]</label></div></if>
+$vbphrase[reason_for_deletion]:<br />
+<input type="text" class="bginput" name="reason" value="$postinfo[del_reason]" size="20" style="width:100%;" maxlength="125" />
+</if>
+</div>
+	
+	<div style="margin-top:$stylevar[cellpadding]px">
+		<input type="submit" class="button" value="$vbphrase[save_changes]" accesskey="s" />
+		<input type="reset" class="button" value="$vbphrase[reset_fields]" accesskey="r" />
+	</div>
+<br />
+<div class="titlebg">$vbphrase[info]</div>
+<div class="windowbg2">$postinfo[username] $postinfo[posttime] $postinfo[postdate]</div>
+<div class="windowbg">$postinfo[pagetext]</div>
+</form>]]></template>
+	</templategroup>
+	<templategroup name="Threadbit">
+		<template name="threadbit" templatetype="template" date="1305255577" username="dartho" version="3.8.7"><![CDATA[<if condition="$show['sticky']">
+<div class="sticky">
+            $thread[movedprefix]
+            $thread[typeprefix]
+            $thread[moderatedprefix]
+            $thread[prefix_rich]
+<a href="showthread.php?$session[sessionurl]goto=newpost&amp;t=$thread[threadid]">$thread[threadtitle]</a> <span class="smallfont">($thread[replycount] $vbphrase[replies])</span>
+<if condition="$thread['pagenav']">$stylevar[dirmark]<span class="smallfont" style="white-space:nowrap">($thread[pagenav]<if condition="$show[pagenavmore]"> ... <a href="showthread.php?$session[sessionurl]t=$thread[threadid]&amp;page=$thread[totalpages]$thread[highlight]">$vbphrase[last_page]</a></if>)</span></if>
+<if condition="$show['deletethread']">
+<a href="postings.php?$session[sessionurl]do=deletethread&t=$thread[threadid]">[$vbphrase[delete]]</a> <a href="postings.php?$session[sessionurl]do=editthread&t=$thread[threadid]">[$vbphrase[edit]]</a> </if>
+<br />
+$vbphrase[last_post]: $thread[lastposter], $thread[lastpostdate]
+<if condition="!$show['detailedtime']">$thread[lastposttime]</if>
+</div>
+
+<else />
+
+<div class="thread$thread[statusicon]">
+            $thread[movedprefix]
+            $thread[typeprefix]
+            $thread[moderatedprefix]
+            $thread[prefix_rich]
+<a class="$thread[statusicon]" href="showthread.php?$session[sessionurl]goto=newpost&amp;t=$thread[threadid]">$thread[threadtitle]</a> <span class="smallfont">($thread[replycount] $vbphrase[replies])</span>
+<if condition="$thread['pagenav']">$stylevar[dirmark]<span class="smallfont" style="white-space:nowrap">($thread[pagenav]<if condition="$show[pagenavmore]"> ... <a href="showthread.php?$session[sessionurl]t=$thread[threadid]&amp;page=$thread[totalpages]$thread[highlight]">$vbphrase[last_page]</a></if>)</span></if>
+</div>
+<if condition="$show['deletethread']">
+<div style="float:right;margin:4px;font-size: .9em;"><span><a id="btn" href="postings.php?$session[sessionurl]do=deletethread&t=$thread[threadid]">$vbphrase[delete]</a></span><span><a id="btn" href="postings.php?$session[sessionurl]do=editthread&t=$thread[threadid]">$vbphrase[edit]</a></span></div></if>
+
+<div class="windowbg">
+$vbphrase[last_post]: $thread[lastposter], $thread[lastpostdate]
+<if condition="!$show['detailedtime']">$thread[lastposttime]</if>
+
+
+</div>
+
+</if>
+
+
+
+]]></template>
+		<template name="threadbit_announcement" templatetype="template" date="1216353731" username="dartho" version="3.8.7"><![CDATA[<div class="announce">
+$vbphrase[announcement]: <a href="announcement.php?$session[sessionurl]f=$foruminfo[forumid]$announcementidlink">$announcement[title]</a>
+<br /><if condition="$show['forumtitle']"><a href="forumdisplay.php?$session[sessionurl]f=$announcement[forumid]">$announcement[forumtitle]</a> </if>
+$vbphrase[posted_by] $announcement[username] $announcement[postdate]
+</div>
+]]></template>
+		<template name="threadbit_deleted" templatetype="template" date="1216353755" username="dartho" version="3.8.7"><![CDATA[<div class="windowbg2">
+$thread[typeprefix]
+<if condition="$show['threadtitle']"><em>$thread[threadtitle]</em> $vbphrase[posted_by] $thread[postusername]</if>
+</div>
+	
+<div>
+<phrase 1="member.php?$session[sessionurl]u=$thread[del_userid]" 2="$thread[del_username]">$vbphrase[thread_deleted_by_x]</phrase>
+<if condition="$show['deletereason']">
+	<span>$vbphrase[reason]: <em>$thread[del_reason]</em></span>
+</if>
+
+	<if condition="$show['managethread']"><span><a href="postings.php?$session[sessionurl]do=editthread&amp;t=$thread[threadid]">$vbphrase[manage]</a></span></if>
+</div>
+
+	
+	
+
+
+	
+	
+
+]]></template>
+		<template name="threadbit_lastvisit" templatetype="template" date="1183548296" username="dartho" version="3.8.7" />
+	</templategroup>
+	<templategroup name="User Control Panel">
+		<template name="USERCP" templatetype="template" date="1305262470" username="dartho" version="3.8.7"><![CDATA[<div class="titlebg">$vbphrase[user_control_panel]</div>
+<!-- ############## PRIVATE MESSAGES ##############  -->
+<div class="windowbg">
+<if condition="$show['privatemessages']">
+<a href="private.php?$session[sessionurl]">$vbphrase[new_private_messages]</a>
+: ($numpms)<br />
+<else />
+<a href="private.php?$session[sessionurl]">$vbphrase[private_messages]</a><br />
+</if>
+
+<a href="subscription.php?$session[sessionurl]">$vbphrase[subscribed_threads]</a><br />
+
+
+<!-- <a href="profile.php?$session[sessionurl]do=editoptions">$vbphrase[edit_options]</a> -->
+</div>
+
+
+<!-- ############## END PRIVATE MESSAGES ##############  -->
+
+]]></template>
+		<template name="usercp_nav_folderbit" templatetype="template" date="1183268550" username="dartho" version="3.8.7"><![CDATA[<a href="$linkurl">$foldername</a>
+]]></template>
+		<template name="USERCP_SHELL" templatetype="template" date="1290151925" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<!-- main page contents -->
+$HTML
+<!-- / main page contents -->
+
+$footer
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Who's Online">
+		<template name="WHOSONLINE" templatetype="template" date="1290151926" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<div class="titlebg"><phrase 1="$numbervisible" 2="$numberguests">$vbphrase[x_members_and_y_guests]</phrase></div>
+
+<if condition="$pagenav">
+<div>$pagenav</div>
+</if>
+<div>
+<span>$vbphrase[username]&nbsp;-&nbsp;</span>
+<span>$vbphrase[last_activity]</span>
+</div>
+$onlinebits
+<div><a href="$reloadurl"><strong>$vbphrase[reload_this_page]</strong></a></div>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="whosonlinebit" templatetype="template" date="1183723641" username="dartho" version="3.8.7"><![CDATA[<if condition="exec_switch_bg()"></if>
+<div>
+<if condition="$show['spider']">$spidertype
+<else />
+$userinfo[musername]
+</if>
+&nbsp;-&nbsp;$userinfo[action]
+</div>]]></template>
+		<template name="whosonline_resolveip" templatetype="template" date="1290151926" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+$metarefresh
+<title>$vboptions[bbtitle] - $vbphrase[whos_online]</title>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+
+<table class="tborder" cellpadding="$stylevar[cellpadding]" cellspacing="$stylevar[cellspacing]" border="0" width="100%" align="center">
+<tr>
+	<td class="tcat" colspan="2"><strong>$vbphrase[resolve_ip_address]</strong></td>
+</tr>
+<tr>
+	<td class="alt1">$vbphrase[ip_address]</td>
+	<td class="alt1">$ipaddress</td>
+</tr>
+<tr>
+	<td class="alt2">$vbphrase[resolved_host_name]</td>
+	<td class="alt2"><if condition="$resolved_host">$resolved_host<else /><i>$vbphrase[unable_resolve_ip]</i></if></td>
+</tr>
+</table>
+
+$forumjump
+
+$footer
+
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+	<templategroup name="Ungrouped Templates">
+		<template name="editpost" templatetype="template" date="1290151913" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<div class="titlebg">$vbphrase[edit_post]</div>
+<form action="editpost.php" method="post">
+<div>
+<strong>$vbphrase[thread]</strong>: <a href="showthread.php?$session[sessionurl]t=$threadinfo[threadid]">$threadinfo[title]</a><br />
+$vbphrase[title]:
+<input type="text" class="bginput" name="title" value="$title" style="width:100%;" maxlength="85" tabindex="1" title="$vbphrase[optional]" /><br />
+$messagearea
+</div>
+<div>
+<input type="hidden" name="s" value="$session[sessionhash]" />
+<input type="hidden" name="do" value="updatepost" />
+<input type="hidden" name="p" value="$postid" />
+<input type="hidden" name="posthash" value="$posthash" />
+<input type="hidden" name="poststarttime" value="$poststarttime" />
+<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+<input type="submit" class="button" name="sbutton" value="$vbphrase[save]" accesskey="s" tabindex="1" />
+</div>
+</form>
+<if condition="$show['deletepostoption']">
+  <form action="editpost.php" method="post">
+  <input type="hidden" name="s" value="$session[sessionhash]" />
+  <input type="hidden" name="p" value="$postid]" />
+  <input type="hidden" name="do" value="deletepost" />
+  <input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+  <input type="submit" name="deletepost" value="Delete" id="rb_del_soft" class="button" />
+           
+                </form>  
+</if>
+$footer
+</div>
+</body>
+</html>]]></template>
+		<template name="footer" templatetype="template" date="1305205890" username="dartho" version="3.8.7"><![CDATA[$ad_location[ad_footer_start]
+<div class="footer">
+	<div class="smallfont" align="center">
+	<!-- Do not remove this copyright notice -->
+	$vbphrase[powered_by_vbulletin]
+	<!-- Do not remove this copyright notice -->
+	</div>
+
+	<div class="smallfont" align="center">
+	<!-- Do not remove cronimage or your scheduled tasks will cease to function -->
+	$cronimage
+	<!-- Do not remove cronimage or your scheduled tasks will cease to function -->
+
+	$vboptions[copyrighttext]
+	</div>
+	<div>
+	<!-- A paypal donation of an amount you consider fair, or can afford to paypal@twf.com.au will allow you to remove the following branding -->
+	Lightweight Styling &copy;<a href="http://twf.com.au" target="_blank">Dartho</a>
+	</div>
+
+</div>
+
+</form>
+
+$ad_location[ad_footer_end]
+
+<if condition="$show['dst_correction']">
+<!-- auto DST correction code -->
+<form action="profile.php?do=dst" method="post" name="dstform">
+	<input type="hidden" name="s" value="$session[sessionhash]" />
+	<input type="hidden" name="securitytoken" value="$bbuserinfo[securitytoken]" />
+	<input type="hidden" name="do" value="dst" />
+</form>
+<script type="text/javascript">
+<!--
+	var tzOffset = $bbuserinfo[timezoneoffset] + $bbuserinfo[dstonoff];
+	var utcOffset = new Date().getTimezoneOffset() / 60;
+	if (Math.abs(tzOffset + utcOffset) == 1)
+	{	// Dst offset is 1 so its changed
+		document.forms.dstform.submit();
+	}
+//-->
+</script>
+<!-- / auto DST correction code -->
+
+</if>
+<script type="text/javascript">
+<!--
+	// Main vBulletin Javascript Initialization
+	vBulletin_init();
+//-->
+</script>
+]]></template>
+		<template name="header" templatetype="template" date="1305254047" username="dartho" version="3.8.7"><![CDATA[	<div style="padding-bottom:6px;text-align:right;">
+	<a class="toplinks" href="index.php?styleid=1">Default Style</a> 
+	<if condition="$show['member']">
+		<a class="toplinks" href="login.php?do=logout&amp;logouthash=$bbuserinfo[logouthash]">$vbphrase[log_out]</a> 
+	<else />
+<a class="toplinks" href="register.php">$vbphrase[register]</a> 
+	</if>
+	</div>
+<div class="header" align="left"><strong>$vboptions[bbtitle]</strong></div>
+
+<if condition="$ad_location['ad_header_logo']">$ad_location[ad_header_logo]</if>
+$_phpinclude_output
+
+<script type="text/javascript">
+function fixImgs(b){var a=document.getElementsByTagName("img");for(i=0;i<a.length;i++)if(w=a[i].width,h=a[i].height,w>b)f=1-(w-b)/w,a[i].width=w*f,a[i].height=h*f}function addLoadEvent(b){var a=window.onload;window.onload=typeof window.onload!="function"?b:function(){a&&a();b()}}addLoadEvent(function(){fixImgs(240)});
+</script>
+
+$ad_location[ad_header_end]]]></template>
+		<template name="headinclude" templatetype="template" date="1290152019" username="dartho" version="3.8.7"><![CDATA[<link rel="stylesheet" href="lightweight.css.php" type="text/css" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta name="HandheldFriendly" content="true" />
+
+]]></template>
+		<template name="STANDARD_ERROR" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<if condition="$show['search_noindex']"><meta name="robots" content="noindex,follow" /></if>
+</head>
+<body>
+<div class="bodywrapping">
+$header
+$navbar
+<div class="titlebg">$vbphrase[vbulletin_message]
+</div>
+<p class="quote">$errormessage</p>
+$footer
+</div>
+</body>
+</html>
+
+
+]]></template>
+		<template name="STANDARD_ERROR_LITE" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+$headinclude
+<title>$pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+<p class="titlebg">$vbphrase[vbulletin_message]
+</p>
+<if condition="$show['search_noindex']"><meta name="robots" content="noindex,follow" /></if>
+$footer
+</div>
+</body>
+</html>
+
+
+]]></template>
+		<template name="STANDARD_ERROR_LOGIN" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<meta name="robots" content="noindex,follow" />
+$headinclude
+</head>
+<body>
+<div class="bodywrapping">
+<p class="titlebg">$vbphrase[vbulletin_message]
+</p>
+$footer
+</div>
+</body>
+</html>
+
+
+]]></template>
+		<template name="STANDARD_REDIRECT" templatetype="template" date="1290151923" username="dartho" version="3.8.7"><![CDATA[$stylevar[htmldoctype]
+<html xmlns="http://www.w3.org/1999/xhtml" dir="$stylevar[textdirection]" lang="$stylevar[languagecode]">
+<head>
+<meta http-equiv="Refresh" content="2; URL=$url?$session[sessionurl]" />
+$headinclude
+<title>$pagetitle</title>
+</head>
+<body>
+<div class="bodywrapping">
+<p class="titlebg"><a href="$url?$session[sessionurl]">$vbphrase[click_if_browser_does_not_redirect]</a></p>
+</p>
+</div>
+</body>
+</html>]]></template>
+	</templategroup>
+</style>
